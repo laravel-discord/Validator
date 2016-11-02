@@ -1,6 +1,6 @@
 <?php
 /**
- * Validator Class
+ * Validator
  * Pure PHP implementation based on Laravel's Validator.
  * Copyright 2016 Charlotte Dunois, All Rights Reserved
  *
