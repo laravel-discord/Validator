@@ -1,12 +1,12 @@
 <?php
 /**
- * Validator Class
+ * Validator
  * Pure PHP implementation based on Laravel's Validator.
  * Copyright 2016 Charlotte Dunois, All Rights Reserved
  *
  * Docs: https://laravel.com/docs/5.2/validation
  * Website: https://charuru.moe
- * License: https://github.com/CharlotteDunois/Validator-Class/blob/master/LICENSE
+ * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
  * $ 02.11.2016 21:37 CharlotteDunois $
 **/
 
