@@ -7,7 +7,6 @@
  * Docs: https://laravel.com/docs/5.2/validation
  * Website: https://charuru.moe
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
- * $ 02.11.2016 21:37 CharlotteDunois $
 **/
 
 $l['formvalidator_make_accepted'] = 'Ist nicht akzeptiert';
