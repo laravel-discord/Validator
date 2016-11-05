@@ -7,7 +7,6 @@
  * Docs: https://laravel.com/docs/5.2/validation
  * Website: https://charuru.moe
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
- * $ 02.11.2016 21:37 CharlotteDunois $
 **/
 
 namespace CharlotteDunois\Validation;
@@ -34,7 +33,7 @@ class Validator {
      * @param  array    $rules
      * @param  string   $lang
      * @param  boolean  $return_asap
-     * @return void
+     * @return Validator
      */
 	static function make($fields, $rules, $lang = 'en', $return_asap = false) {
 		return new Validator($fields, $rules, $lang, $return_asap);
