@@ -44,7 +44,7 @@ class Validator {
      *
      * @return array
      */
-	function getErrors() {
+	function errors() {
 		return $this->errors;
 	}
 	
