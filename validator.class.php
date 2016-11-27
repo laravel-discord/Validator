@@ -33,7 +33,7 @@ class Validator {
      * @param  array    $rules
      * @param  string   $lang
      * @param  boolean  $return_asap
-     * @return Validator
+     * @return void
      */
 	static function make($fields, $rules, $lang = 'en', $return_asap = false) {
 		return new Validator($fields, $rules, $lang, $return_asap);
@@ -53,7 +53,20 @@ class Validator {
      *
      * @return bool
      */
+	function passes() {
+		return $this->startValidation();
+	}
+	
+	/**
+     * Determine if the data fails the validation rules.
+     *
+     * @return bool
+     */
 	function fails() {
+		return !($this->startValidation());
+	}
+	
+	private function startValidation() {
 		if(!is_array($this->fields) OR !is_array($this->rules)) {
 			return false;
 		}
@@ -728,7 +741,7 @@ class Validator {
 			}
 		}
 		
-		if(!empty($this->errors)) {
+		if(empty($this->errors)) {
 			return true;
 		}
 		
