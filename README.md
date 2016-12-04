@@ -19,6 +19,6 @@ Include file and initialize an instance.
     var_dump($fail->fails(), $fail->errors());
 
 
-API Docs
+Laravel Docs
 ==================
-https://charlottedunois.github.io/Validator/
+https://laravel.com/docs/5.2/validation
