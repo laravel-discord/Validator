@@ -1,7 +1,6 @@
 <?php
 /**
  * Validator
- * Pure PHP implementation based on Laravel's Validator.
  * Copyright 2016 Charlotte Dunois, All Rights Reserved
  *
  * Docs: https://laravel.com/docs/5.2/validation
@@ -11,6 +10,9 @@
 
 namespace CharlotteDunois\Validation;
 
+/**
+ * Pure PHP implementation based on Laravel's Validator.
+*/
 class Validator {
     private $errors = array();
     private $fields = array();
@@ -751,6 +753,7 @@ class Validator {
     /**
      * Return the error message based on the language key (language based).
      *
+     * @param  string  $key
      * @return string
      */
     function language($key) {
