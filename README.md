@@ -17,3 +17,8 @@ Include file and initialize an instance.
     //This one will fail due to invalid email
     $fail = CharlotteDunois\Validation\Validator::make(array('username' => 'CharlotteDuois', 'email' => 'noreply@githubcom'), array('username' => 'string|required|min:5|max:75', 'email' => 'email'));
     var_dump($fail->fails(), $fail->errors());
+
+
+API Docs
+==================
+https://charlottedunois.github.io/Validator/
