@@ -51,7 +51,7 @@ class Validator {
     }
     
     /**
-     * Determine if the data fails the validation rules.
+     * Determine if the data passes the validation rules.
      *
      * @return bool
      */
