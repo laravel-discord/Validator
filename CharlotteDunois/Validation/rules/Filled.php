@@ -1,0 +1,21 @@
+<?php
+/**
+ * Validator
+ * Copyright 2017 Charlotte Dunois, All Rights Reserved
+ *
+ * Docs: https://laravel.com/docs/5.2/validation
+ * Website: https://charuru.moe
+ * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
+**/
+
+namespace CharlotteDunois\Validation\Rule;
+
+class Filled implements \CharlotteDunois\Validation\ValidationRule {
+    function validate($value, $key, $fields, $options) {
+        if(isset($fields[$key]) AND empty($fields[$key])) {
+            return 'formvalidator_make_filled';
+        }
+        
+        return true;
+    }
+}
