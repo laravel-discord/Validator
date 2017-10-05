@@ -101,11 +101,7 @@ class Validator {
         foreach($this->rules as $key => $rule) {
             $set = explode('|', $rule);
             
-            if(!array_key_exists($key, $this->fields)) {
-                continue;
-            }
-            
-            $value = $this->fields[$key];
+            $value = (array_key_exists($key, $this->fields) ? $this->fields[$key] : NULL);
             
             $nullable = false;
             foreach($set as $r) {

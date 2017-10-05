@@ -12,7 +12,7 @@ namespace CharlotteDunois\Validation\Rule;
 
 class Required implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, \CharlotteDunois\Validation\Validator $validator) {
-        if(!isset($fields[$key]) OR is_null($value) OR trim($value) == '' OR (is_array($value) AND empty($value)) OR (isset($FILES[$key]) AND $FILES[$key]['error'] != 0)) {
+        if(!isset($fields[$key]) OR is_null($value) OR trim($value) == '' OR (is_array($value) AND empty($value)) OR !isset($_FILES[$key]) OR $_FILES[$key]['error'] != 0) {
             return 'formvalidator_make_required';
         }
         
