@@ -11,7 +11,7 @@
 namespace CharlotteDunois\Validation\Rule;
 
 class Dimensions implements \CharlotteDunois\Validation\ValidationRule {
-    function validate($value, $key, $fields, $options) {
+    function validate($value, $key, $fields, $options, \CharlotteDunois\Validation\Validator $validator) {
         if(!isset($_FILES[$key]) OR !file_exists($_FILES[$key]['tmp_name'])) {
             return 'formvalidator_make_invalid_file';
         }

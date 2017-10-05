@@ -11,7 +11,7 @@
 namespace CharlotteDunois\Validation\Rule;
 
 class Alpha_Dash implements \CharlotteDunois\Validation\ValidationRule {
-    function validate($value, $key, $fields, $options) {
+    function validate($value, $key, $fields, $options, \CharlotteDunois\Validation\Validator $validator) {
         if(mb_ereg("/^([^A-Za-z\-_]+)$/i", $value)) {
             return 'formvalidator_make_alpha_dash';
         }

@@ -11,7 +11,7 @@
 namespace CharlotteDunois\Validation\Rule;
 
 class Size implements \CharlotteDunois\Validation\ValidationRule {
-    function validate($value, $key, $fields, $options) {
+    function validate($value, $key, $fields, $options, \CharlotteDunois\Validation\Validator $validator) {
         if(isset($_FILES[$key]) AND file_exists($_FILES[$key]['tmp_name']) AND $_FILES[$key]['error'] == 0) {
             $v = round((filesize($_FILES[$key]['tmp_name']) / 1024));
         } elseif(is_array($value)) {

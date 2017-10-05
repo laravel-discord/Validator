@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <meta charset="utf-8"/>
-    <title>CharlotteDunois</title>
+    <title>CharlotteDunois/Validator</title>
     <meta name="author" content=""/>
     <meta name="description" content=""/>
 
@@ -83,7 +83,7 @@
             <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                 <i class="icon-ellipsis-vertical"></i>
             </a>
-            <a class="brand" href="../index.html">CharlotteDunois</a>
+            <a class="brand" href="../index.html">CharlotteDunois/Validator</a>
 
             <div class="nav-collapse">
                 <ul class="nav pull-right">
@@ -114,12 +114,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">0</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
                                 </a>
                             </li>
                             <li>
@@ -144,32 +144,33 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1174052670"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-2105992260"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1174052670" class="accordion-body collapse in">
+            <div id="namespace-2105992260" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1843770677"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1201118745"></a>
                                 <a href="../namespaces/CharlotteDunois.html" style="margin-left: 30px; padding-left: 0">CharlotteDunois</a>
             </div>
-            <div id="namespace-1843770677" class="accordion-body collapse ">
+            <div id="namespace-1201118745" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-250002752"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1381322788"></a>
                                 <a href="../namespaces/CharlotteDunois.Validation.html" style="margin-left: 30px; padding-left: 0">Validation</a>
             </div>
-            <div id="namespace-250002752" class="accordion-body collapse ">
+            <div id="namespace-1381322788" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
                     <ul>
+                                                    <li class="interface"><a href="../classes/CharlotteDunois.Validation.ValidationRule.html">ValidationRule</a></li>
                                                                                                     <li class="class"><a href="../classes/CharlotteDunois.Validation.Validator.html">Validator</a></li>
                                             </ul>
                 </div>
@@ -266,7 +267,7 @@
                     
                     <dl>
                         <dt>File</dt>
-                            <dd><a href="../files/validator.class.html"><div class="path-wrapper">validator.class.php</div></a></dd>
+                            <dd><a href="../files/Validator.html"><div class="path-wrapper">Validator.php</div></a></dd>
                                                 <dt>Package</dt>
                             <dd><div class="namespace-wrapper">Default</div></dd>
                                                 <dt>Class hierarchy</dt>
@@ -300,7 +301,7 @@
             <article class="method">
                 <h3 class="public ">make()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">make(array  <span class="argument">$fields</span>, array  <span class="argument">$rules</span>, string  <span class="argument">$lang = &#039;en&#039;</span>, boolean  <span class="argument">$return_asap = false</span>) : void</pre>
+                <pre class="signature" style="margin-right: 54px;">make(array  <span class="argument">$fields</span>, array  <span class="argument">$rules</span>, string  <span class="argument">$lang = &#039;en&#039;</span>) : \CharlotteDunois\Validation\Validator</pre>
                 <p><em>Create a new Validator instance.</em></p>
                 
 
@@ -309,27 +310,24 @@
                                                     <tr>
                                 <td>array</td>
                                 <td>$fields </td>
-                                <td></td>
+                                <td><p>The fields you wanna run the validation against.</p></td>
                             </tr>
                                                     <tr>
                                 <td>array</td>
                                 <td>$rules </td>
-                                <td></td>
+                                <td><p>The validation rules.</p></td>
                             </tr>
                                                     <tr>
                                 <td>string</td>
                                 <td>$lang </td>
-                                <td></td>
-                            </tr>
-                                                    <tr>
-                                <td>boolean</td>
-                                <td>$return_asap </td>
-                                <td></td>
+                                <td><p>The language for error messages (included are 'en' or 'de').</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    <a href="../classes/CharlotteDunois.Validation.Validator.html">\CharlotteDunois\Validation\Validator</a>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -470,10 +468,10 @@
     <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="source-view-label">validator.class.php</h3>
+            <h3 id="source-view-label">Validator.php</h3>
         </div>
         <div class="modal-body">
-            <pre data-src="../files/validator.class.php.txt" class="language-php line-numbers"></pre>
+            <pre data-src="../files/Validator.php.txt" class="language-php line-numbers"></pre>
         </div>
     </div>
 
@@ -514,7 +512,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on December 4th, 2016 at 22:33.
+                    on October 5th, 2017 at 18:52.
                 </section>
             </section>
         </section>

@@ -11,7 +11,7 @@
 namespace CharlotteDunois\Validation\Rule;
 
 class Date_Format implements \CharlotteDunois\Validation\ValidationRule {
-    function validate($value, $key, $fields, $options) {
+    function validate($value, $key, $fields, $options, \CharlotteDunois\Validation\Validator $validator) {
         $dt = date_parse_from_format($options, $value);
         if($dt === false OR $dt['errorcount'] > 0) {
             return array('formvalidator_make_date_format', array('{0}' => $options));

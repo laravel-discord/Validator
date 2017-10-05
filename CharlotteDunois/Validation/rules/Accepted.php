@@ -11,7 +11,7 @@
 namespace CharlotteDunois\Validation\Rule;
 
 class Accepted implements \CharlotteDunois\Validation\ValidationRule {
-    function validate($value, $key, $fields, $options) {
+    function validate($value, $key, $fields, $options, \CharlotteDunois\Validation\Validator $validator) {
         if(!in_array($value, array('yes', 'on', 1, true))) {
             return 'formvalidator_make_accepted';
         }

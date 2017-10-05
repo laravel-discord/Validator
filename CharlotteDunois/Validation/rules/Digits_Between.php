@@ -11,7 +11,7 @@
 namespace CharlotteDunois\Validation\Rule;
 
 class Digits_Between implements \CharlotteDunois\Validation\ValidationRule {
-    function validate($value, $key, $fields, $options) {
+    function validate($value, $key, $fields, $options, \CharlotteDunois\Validation\Validator $validator) {
         $n = explode(',', $options);
         if(!is_numeric($value) OR $n[0] > $value OR $n[1] < $value) {
             return array('formvalidator_make_digits_between', array('{0}' => $options));

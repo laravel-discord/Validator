@@ -11,7 +11,7 @@
 namespace CharlotteDunois\Validation\Rule;
 
 class StringRule implements \CharlotteDunois\Validation\ValidationRule {
-    function validate($value, $key, $fields, $options) {
+    function validate($value, $key, $fields, $options, \CharlotteDunois\Validation\Validator $validator) {
         if(!is_string($value)) {
             return 'formvalidator_make_string';
         }

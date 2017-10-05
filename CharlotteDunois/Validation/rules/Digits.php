@@ -11,7 +11,7 @@
 namespace CharlotteDunois\Validation\Rule;
 
 class Digits implements \CharlotteDunois\Validation\ValidationRule {
-    function validate($value, $key, $fields, $options) {
+    function validate($value, $key, $fields, $options, \CharlotteDunois\Validation\Validator $validator) {
         if(!is_numeric($value) OR strlen($value) != strlen($options)) {
             return array('formvalidator_make_digits', array('{0}' => $options));
         }

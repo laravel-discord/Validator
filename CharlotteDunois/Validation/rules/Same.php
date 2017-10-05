@@ -11,7 +11,7 @@
 namespace CharlotteDunois\Validation\Rule;
 
 class Same implements \CharlotteDunois\Validation\ValidationRule {
-    function validate($value, $key, $fields, $options) {
+    function validate($value, $key, $fields, $options, \CharlotteDunois\Validation\Validator $validator) {
         if($value != $fields[$options]) {
             return array('formvalidator_make_same', array('{0}' => $options));
         }

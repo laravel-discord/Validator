@@ -11,7 +11,7 @@
 namespace CharlotteDunois\Validation\Rule;
 
 class After implements \CharlotteDunois\Validation\ValidationRule {
-    function validate($value, $key, $fields, $options) {
+    function validate($value, $key, $fields, $options, \CharlotteDunois\Validation\Validator $validator) {
         if(strtotime($options) > strotitime($value)) {
             return array('formvalidator_make_after', array('{0}' => $options));
         }

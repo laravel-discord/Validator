@@ -11,7 +11,7 @@
 namespace CharlotteDunois\Validation\Rule;
 
 class Between implements \CharlotteDunois\Validation\ValidationRule {
-    function validate($value, $key, $fields, $options) {
+    function validate($value, $key, $fields, $options, \CharlotteDunois\Validation\Validator $validator) {
         $n = explode(',', $options);
         if($n[0] > $value OR $value > $n[1]) {
             return array('formvalidator_make_between', array('{0}' => $r[1]));

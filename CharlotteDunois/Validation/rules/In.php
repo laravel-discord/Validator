@@ -11,7 +11,7 @@
 namespace CharlotteDunois\Validation\Rule;
 
 class In implements \CharlotteDunois\Validation\ValidationRule {
-    function validate($value, $key, $fields, $options) {
+    function validate($value, $key, $fields, $options, \CharlotteDunois\Validation\Validator $validator) {
         $n = explode(',', $options);
         if(!in_array($value, $n)) {
             return array('formvalidator_make_in', array('{0}' => $options));

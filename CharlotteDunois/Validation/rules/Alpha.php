@@ -11,7 +11,7 @@
 namespace CharlotteDunois\Validation\Rule;
 
 class Alpha implements \CharlotteDunois\Validation\ValidationRule {
-    function validate($value, $key, $fields, $options) {
+    function validate($value, $key, $fields, $options, \CharlotteDunois\Validation\Validator $validator) {
         if(!ctype_alpha($value)) {
             return 'formvalidator_make_alpha';
         }
