@@ -2,7 +2,7 @@
     "name": "charlottedunois/validator",
     "type": "library",
     "description": "Pure PHP Implementation based on Laravel's Validator.",
-    "keywords": ["http", "validation" ],
+    "keywords": [ "validation" ],
     "homepage": "https://github.com/CharlotteDunois/Validator",
     "license": "MIT",
     "authors": [
