@@ -148,7 +148,7 @@ class Validator {
      */
     function language($key) {
         if(empty($this->lang_words)) {
-            include(dirname(__FILE__).'/languages/validator.lang.'.$this->lang.'.php');
+            include(dirname(__FILE__).'/languages/'.$this->lang.'.lang.php');
             if(!empty($l)) {
                 $this->lang_words = $l;
             }
