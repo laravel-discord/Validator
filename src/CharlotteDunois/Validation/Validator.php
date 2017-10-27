@@ -44,7 +44,7 @@ class Validator {
                     
                     if(in_array('CharlotteDunois\\Validation\\ValidationRule', $interfaces)) {
                         $name = str_replace('rule', '', strtolower($name));
-                        self::$rulesetss[$name] = $ruleset;
+                        self::$rulesets[$name] = $ruleset;
                     }
                 } catch(Exception $e) {
                     /* Continue regardless of error */
@@ -113,7 +113,7 @@ class Validator {
                    throw new \Exception('Validation Rule "'.$r[0].'" does not exist');
                 }
                 
-                $return = self::$rulesetss[$r[0]]->validate($value, $key, $this->fields, (array_key_exists(1, $r) ? $r[1] : NULL), $this);
+                $return = self::$rulesets[$r[0]]->validate($value, $key, $this->fields, (array_key_exists(1, $r) ? $r[1] : NULL), $this);
                 if(is_string($return)) {
                     $istate[] = false;
                     $this->errors[$key] = $this->language($return);
