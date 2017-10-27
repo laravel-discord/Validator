@@ -23,14 +23,14 @@ class Validator {
     private $lang = NULL;
     private $lang_words = array();
     
-    private static $rules = array();
+    private static $rulesets = array();
     
     private function __construct($fields, $rules, $lang) {
         $this->fields = $fields;
         $this->rules = $rules;
         $this->lang = $lang;
         
-        if(empty(self::$ruleset)) {
+        if(empty(self::$rulesets)) {
             $rules = glob(__DIR__.'/rules/*.php');
             foreach($rules as $rule) {
                 try {
@@ -44,7 +44,7 @@ class Validator {
                     
                     if(in_array('CharlotteDunois\\Validation\\ValidationRule', $interfaces)) {
                         $name = str_replace('rule', '', strtolower($name));
-                        self::$ruleset[$name] = $ruleset;
+                        self::$rulesetss[$name] = $ruleset;
                     }
                 } catch(Exception $e) {
                     /* Continue regardless of error */
@@ -109,11 +109,11 @@ class Validator {
                 if($r[0] == 'nullable') {
                     $nullable = true;
                     continue;
-                } elseif(!isset(self::$ruleset[$r[0]])) {
+                } elseif(!isset(self::$rulesets[$r[0]])) {
                    throw new \Exception('Validation Rule "'.$r[0].'" does not exist');
                 }
                 
-                $return = self::$ruleset[$r[0]]->validate($value, $key, $this->fields, (array_key_exists(1, $r) ? $r[1] : NULL), $this);
+                $return = self::$rulesetss[$r[0]]->validate($value, $key, $this->fields, (array_key_exists(1, $r) ? $r[1] : NULL), $this);
                 if(is_string($return)) {
                     $istate[] = false;
                     $this->errors[$key] = $this->language($return);
