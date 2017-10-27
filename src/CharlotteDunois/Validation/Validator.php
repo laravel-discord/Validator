@@ -104,9 +104,12 @@ class Validator {
             $value = (array_key_exists($key, $this->fields) ? $this->fields[$key] : NULL);
             
             $nullable = false;
+            $required = false;
             foreach($set as $r) {
                 $r = explode(':', $r);
-                if($r[0] == 'nullable') {
+                if($r[0] == 'required') {
+                    $required = true;
+                } elseif($r[0] == 'nullable') {
                     $nullable = true;
                     continue;
                 } elseif(!isset(self::$rulesets[$r[0]])) {
@@ -120,6 +123,14 @@ class Validator {
                 } elseif(is_array($return)) {
                     $istate[] = false;
                     $this->errors[$key] = $this->language($return[0], $return[1]);
+                }
+            }
+            
+            if(!array_key_exists($key, $this->fields)) {
+                if($required === true) {
+                    $this->errors[$key] = $this->language('formvalidator_make_required');
+                } else {
+                    unset($this->errors[$key]);
                 }
             }
             
