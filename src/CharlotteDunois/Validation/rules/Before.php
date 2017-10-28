@@ -11,7 +11,11 @@
 namespace CharlotteDunois\Validation\Rule;
 
 class Before implements \CharlotteDunois\Validation\ValidationRule {
-    function validate($value, $key, $fields, $options, \CharlotteDunois\Validation\Validator $validator) {
+    function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
+        if($exists === false) {
+            return null;
+        }
+        
         if(strtotime($options) < strtotime($value)) {
             return array('formvalidator_make_before', array('{0}' => $options));
         }

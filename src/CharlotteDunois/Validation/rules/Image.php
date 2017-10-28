@@ -11,7 +11,11 @@
 namespace CharlotteDunois\Validation\Rule;
 
 class Image implements \CharlotteDunois\Validation\ValidationRule {
-    function validate($value, $key, $fields, $options, \CharlotteDunois\Validation\Validator $validator) {
+    function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
+        if($exists === false) {
+            return null;
+        }
+        
         if(!isset($_FILES[$key]) OR !file_exists($_FILES[$key]['tmp_name'])) {
             return 'formvalidator_make_image';
         }

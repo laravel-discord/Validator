@@ -20,7 +20,8 @@ interface ValidationRule {
      * @param string                                 $key         The key of the field.
      * @param array                                  $fields      The fields.
      * @param mixed                                  $options     Any rule options.
+     * @param bool                                   $exists      If the field exists ($value is null on false).
      * @param \CharlotteDunois\Validation\Validator  $validator   The Validator instance
      */
-    function validate($value, $key, $fields, $options, \CharlotteDunois\Validation\Validator $validator);
+    function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator);
 }

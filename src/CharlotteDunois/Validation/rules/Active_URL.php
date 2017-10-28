@@ -11,7 +11,11 @@
 namespace CharlotteDunois\Validation\Rule;
 
 class Active_URL implements \CharlotteDunois\Validation\ValidationRule {
-    function validate($value, $key, $fields, $options, \CharlotteDunois\Validation\Validator $validator) {
+    function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
+        if($exists === false) {
+            return null;
+        }
+        
         if(!checkdnsrr($value)) {
             return 'formvalidator_make_active_url';
         }
