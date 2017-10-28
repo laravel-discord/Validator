@@ -25,6 +25,8 @@ class Validator {
     
     private static $rulesets = array();
     
+    private static $langrules = array();
+    
     private function __construct($fields, $rules, $lang) {
         $this->fields = $fields;
         $this->rules = $rules;
@@ -43,8 +45,12 @@ class Validator {
                     $interfaces = class_implements($ruleset);
                     
                     if(in_array('CharlotteDunois\\Validation\\ValidationRule', $interfaces)) {
-                        $name = str_replace('rule', '', strtolower($name));
-                        self::$rulesets[$name] = $ruleset;
+                        $rname = str_replace('rule', '', strtolower($name));
+                        self::$rulesets[$rname] = $ruleset;
+                        
+                        if(stripos($name, 'rule') !== false) {
+                            self::$langrules[] = $rname;
+                        }
                     }
                 } catch(Exception $e) {
                     /* Continue regardless of error */
@@ -102,6 +108,7 @@ class Validator {
             $set = explode('|', $rule);
             
             $exists = array_key_exists($key, $this->fields);
+            $passedLang = false;
             $value = ($exists ? $this->fields[$key] : NULL);
             
             $nullable = false;
@@ -114,13 +121,27 @@ class Validator {
                    throw new \Exception('Validation Rule "'.$r[0].'" does not exist');
                 }
                 
+                $passed = true;
+                
                 $return = self::$rulesets[$r[0]]->validate($value, $key, $this->fields, (array_key_exists(1, $r) ? $r[1] : NULL), $exists, $this);
                 if(is_string($return)) {
+                    $passed = false;
                     $istate[] = false;
                     $this->errors[$key] = $this->language($return);
                 } elseif(is_array($return)) {
+                    $passed = false;
                     $istate[] = false;
                     $this->errors[$key] = $this->language($return[0], $return[1]);
+                }
+                
+                if(in_array($r[0], self::$langrules)) {
+                    if($passed === true) {
+                        $passedLang = true;
+                    } else {
+                        if($passedLang === true) {
+                            unset($this->errors[$key]);
+                        }
+                    }
                 }
             }
             
