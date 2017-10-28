@@ -13,10 +13,6 @@ namespace CharlotteDunois\Validation\Rule;
 class Present implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {
-            return null;
-        }
-        
-        if(!isset($fields[$key])) {
             return 'formvalidator_make_present';
         }
         
