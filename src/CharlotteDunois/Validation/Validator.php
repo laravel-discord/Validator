@@ -112,6 +112,7 @@ class Validator {
             
             $passedLang = false;
             $failedLangBefore = false;
+            $failedOtherRules = false;
             
             $nullable = false;
             foreach($set as $r) {
@@ -128,25 +129,38 @@ class Validator {
                 $return = self::$rulesets[$r[0]]->validate($value, $key, $this->fields, (array_key_exists(1, $r) ? $r[1] : NULL), $exists, $this);
                 if(is_string($return)) {
                     $passed = false;
-                    $istate[] = false;
-                    $this->errors[$key] = $this->language($return);
                 } elseif(is_array($return)) {
                     $passed = false;
-                    $istate[] = false;
-                    $this->errors[$key] = $this->language($return[0], $return[1]);
                 }
                 
                 if(in_array($r[0], self::$langrules)) {
                     if($passed === true) {
                         $passedLang = true;
                     } else {
-                        if($passedLang === true AND $failedLangBefore === true) {
-                            unset($this->errors[$key]);
+                        if($passedLang === false) {
+                            $failedLangBefore = true;
+                        } else {
+                            $passed = true;
                         }
-                        
-                        $failedLangBefore = true;
+                    }
+                } else {
+                    if($passed === false) {
+                        $failedOtherRules = true;
                     }
                 }
+                
+                if($passed === false) {
+                    $istate[] = false;
+                    if(is_array($return)) {
+                        $this->errors[$key] = $this->language($return[0], $return[1]);
+                    } else {
+                        $this->errors[$key] = $this->language($return);
+                    }
+                }
+            }
+            
+            if($passedLang === true AND $failedLangBefore === true AND $failedOtherRules === false) {
+                unset($this->errors[$key]);
             }
             
             if($exists === true AND is_null($value)) {
