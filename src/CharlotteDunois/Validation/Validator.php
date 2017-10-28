@@ -127,9 +127,7 @@ class Validator {
                 $passed = true;
                 
                 $return = self::$rulesets[$r[0]]->validate($value, $key, $this->fields, (array_key_exists(1, $r) ? $r[1] : NULL), $exists, $this);
-                if(is_string($return)) {
-                    $passed = false;
-                } elseif(is_array($return)) {
+                if(is_string($return) OR is_array($return)) {
                     $passed = false;
                 }
                 
