@@ -108,8 +108,10 @@ class Validator {
             $set = explode('|', $rule);
             
             $exists = array_key_exists($key, $this->fields);
-            $passedLang = false;
             $value = ($exists ? $this->fields[$key] : NULL);
+            
+            $passedLang = false;
+            $failedLangBefore = false;
             
             $nullable = false;
             foreach($set as $r) {
@@ -138,9 +140,11 @@ class Validator {
                     if($passed === true) {
                         $passedLang = true;
                     } else {
-                        if($passedLang === true) {
+                        if($passedLang === true AND $failedLangBefore === true) {
                             unset($this->errors[$key]);
                         }
+                        
+                        $failedLangBefore = true;
                     }
                 }
             }
