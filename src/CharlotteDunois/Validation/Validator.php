@@ -124,7 +124,7 @@ class Validator {
                 }
             }
             
-            if(is_null($value)) {
+            if($exists === true AND is_null($value)) {
                 if($nullable === false) {
                     $istate[] = false;
                     $this->errors[$key] = $this->language('formvalidator_make_nullable');
