@@ -182,9 +182,10 @@ class Validator {
      * Return the error message based on the language key (language based).
      *
      * @param  string  $key
+     * @param  array   $replacements
      * @return string
      */
-    function language($key) {
+    function language($key, $replacements) {
         if(empty($this->lang_words)) {
             include(dirname(__FILE__).'/languages/'.$this->lang.'.lang.php');
             if(!empty($l)) {
@@ -193,7 +194,15 @@ class Validator {
         }
         
         if(isset($this->lang_words[$key])) {
-            return $this->lang_words[$key];
+            $lang = $this->lang_words[$key];
+            
+            if(!empty($replacements)) {
+                foreach($replacements as $key => $val) {
+                    $lang = str_replace($key, $val, $lang);
+                }
+            }
+            
+            return $lang;
         }
         
         return $key;
