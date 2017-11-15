@@ -28,9 +28,9 @@ class Min implements \CharlotteDunois\Validation\ValidationRule {
         
         if($v < $options) {
             if(is_string($value)) {
-                return array('formvalidator_make_max_string', array('{0}' => $options));
+                return array('formvalidator_make_min_string', array('{0}' => $options));
             } else {
-                return array('formvalidator_make_max', array('{0}' => $options));
+                return array('formvalidator_make_min', array('{0}' => $options));
             }
             
         }
