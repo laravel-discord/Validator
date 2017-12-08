@@ -111,7 +111,6 @@ class Validator {
             $value = ($exists ? $this->fields[$key] : NULL);
             
             $passedLang = false;
-            $failedLangBefore = false;
             $failedOtherRules = false;
             
             $nullable = false;
@@ -136,9 +135,7 @@ class Validator {
                         $passedLang = true;
                     } else {
                         if($passedLang === false) {
-                            $failedLangBefore = true;
-                        } else {
-                            $passed = true;
+                            $passed = false;
                         }
                     }
                 } else {
@@ -157,7 +154,7 @@ class Validator {
                 }
             }
             
-            if($passedLang === true AND $failedLangBefore === true AND $failedOtherRules === false) {
+            if($passedLang === true AND $failedOtherRules === false) {
                 unset($this->errors[$key]);
             }
             
