@@ -185,7 +185,7 @@ class Validator {
      * @param  array   $replacements
      * @return string
      */
-    function language($key, $replacements) {
+    function language($key, $replacements = array()) {
         if(empty($this->lang_words)) {
             include(dirname(__FILE__).'/languages/'.$this->lang.'.lang.php');
             if(!empty($l)) {
