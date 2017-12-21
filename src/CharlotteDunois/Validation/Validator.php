@@ -37,7 +37,7 @@ class Validator {
             foreach($rules as $rule) {
                 try {
                     $arrname = explode('/', $rule);
-                    $name = substr(array_pop($arrname), 0, -4);
+                    $name = mb_substr(array_pop($arrname), 0, -4);
                     include_once($rule);
                     
                     $class = '\\CharlotteDunois\\Validation\\Rule\\'.$name;
@@ -45,10 +45,10 @@ class Validator {
                     $interfaces = class_implements($ruleset);
                     
                     if(in_array('CharlotteDunois\\Validation\\ValidationRule', $interfaces)) {
-                        $rname = str_replace('rule', '', strtolower($name));
+                        $rname = str_replace('rule', '', mb_strtolower($name));
                         self::$rulesets[$rname] = $ruleset;
                         
-                        if(stripos($name, 'rule') !== false) {
+                        if(mb_stripos($name, 'rule') !== false) {
                             self::$langrules[] = $rname;
                         }
                     }

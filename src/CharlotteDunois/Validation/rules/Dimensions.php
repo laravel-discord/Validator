@@ -57,7 +57,7 @@ class Dimensions implements \CharlotteDunois\Validation\ValidationRule {
                     }
                 break;
                 case 'ratio':
-                    if(strpos($k[1], '/') !== false) {
+                    if(mb_strpos($k[1], '/') !== false) {
                         $k[1] = explode('/', $k[1]);
                         $k[1] = $k[1][0] / $k[1][1];
                     }

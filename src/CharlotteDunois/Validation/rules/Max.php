@@ -23,7 +23,7 @@ class Max implements \CharlotteDunois\Validation\ValidationRule {
         } elseif(is_numeric($value)) {
             $v = $value;
         } else {
-            $v = strlen($value);
+            $v = mb_strlen($value);
         }
         
         if($v > $options) {
