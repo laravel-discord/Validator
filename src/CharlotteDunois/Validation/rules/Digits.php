@@ -16,7 +16,7 @@ class Digits implements \CharlotteDunois\Validation\ValidationRule {
             return null;
         }
         
-        if(!is_numeric($value) OR strlen($value) != strlen($options)) {
+        if(!is_numeric($value) OR mb_strlen($value) != mb_strlen($options)) {
             return array('formvalidator_make_digits', array('{0}' => $options));
         }
         
