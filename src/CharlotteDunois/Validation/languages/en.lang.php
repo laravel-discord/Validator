@@ -2,7 +2,7 @@
 /**
  * Validator
  * Pure PHP implementation based on Laravel's Validator.
- * Copyright 2016 Charlotte Dunois, All Rights Reserved
+ * Copyright 2017-2018 Charlotte Dunois, All Rights Reserved
  *
  * Docs: https://laravel.com/docs/5.2/validation
  * Website: https://charuru.moe
@@ -16,6 +16,7 @@ $l['formvalidator_make_alpha'] = 'Does not contain alphabetical characters';
 $l['formvalidator_make_alpha_dash'] = 'Does not contain alphabetic, -, and _ characters';
 $l['formvalidator_make_alpha_num'] = 'Does not contain alphanumeric characters';
 $l['formvalidator_make_array'] = 'Is not an array';
+$l['formvalidator_make_array_subtype'] = 'Is not an array of {0} values';
 $l['formvalidator_make_before'] = 'Is smaller / before than {0}';
 $l['formvalidator_make_between'] = 'Is not between {0}';
 $l['formvalidator_make_boolean'] = 'Is not a boolean value';
@@ -36,9 +37,10 @@ $l['formvalidator_make_ratio'] = 'Does not match the ratio {0}';
 $l['formvalidator_make_distinct'] = 'Is not unique';
 $l['formvalidator_make_email'] = 'Is not an e-mail address';
 $l['formvalidator_make_filled'] = 'Is empty';
+$l['formvalidator_make_float'] = 'Is not a float';
 $l['formvalidator_make_image'] = 'No image';
 $l['formvalidator_make_in'] = 'Does not contain any of the following: {0}';
-$l['formvalidator_make_integer'] = 'Is not an INTEger';
+$l['formvalidator_make_integer'] = 'Is not an integer';
 $l['formvalidator_make_ip'] = 'Is not an IP address';
 $l['formvalidator_make_json'] = 'Is not a valid JSON string';
 $l['formvalidator_make_max'] = 'Is greater than {0}';

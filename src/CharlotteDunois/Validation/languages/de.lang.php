@@ -2,7 +2,7 @@
 /**
  * Validator
  * Pure PHP implementation based on Laravel's Validator.
- * Copyright 2016 Charlotte Dunois, All Rights Reserved
+ * Copyright 2017-2018 Charlotte Dunois, All Rights Reserved
  *
  * Docs: https://laravel.com/docs/5.2/validation
  * Website: https://charuru.moe
@@ -16,6 +16,7 @@ $l['formvalidator_make_alpha'] = 'Enthält nicht alphabetische Zeichen';
 $l['formvalidator_make_alpha_dash'] = 'Enthält nicht alphabetische, - und _  zeichen';
 $l['formvalidator_make_alpha_num'] = 'Enthält nicht alphanumerische Zeichen';
 $l['formvalidator_make_array'] = 'Ist kein Array';
+$l['formvalidator_make_array_subtype'] = 'Ist kein Array von {0} values';
 $l['formvalidator_make_before'] = 'Ist kleiner/vorher als {0}';
 $l['formvalidator_make_between'] = 'Ist nicht zwischen {0}';
 $l['formvalidator_make_boolean'] = 'Ist kein booleanischer Wert';
@@ -36,6 +37,7 @@ $l['formvalidator_make_ratio'] = 'Entspricht nicht dem Verhältnis {0}';
 $l['formvalidator_make_distinct'] = 'Ist nicht einzigartig';
 $l['formvalidator_make_email'] = 'Ist keine E-Mail-Adresse';
 $l['formvalidator_make_filled'] = 'Ist leer';
+$l['formvalidator_make_float'] = 'Ist kein Float';
 $l['formvalidator_make_image'] = 'Ist kein Bild';
 $l['formvalidator_make_in'] = 'Enthält keiner der folgenden Werten: {0}';
 $l['formvalidator_make_integer'] = 'Ist kein Integer';

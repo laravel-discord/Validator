@@ -1,7 +1,7 @@
 <?php
 /**
  * Validator
- * Copyright 2017 Charlotte Dunois, All Rights Reserved
+ * Copyright 2017-2018 Charlotte Dunois, All Rights Reserved
  *
  * Docs: https://laravel.com/docs/5.2/validation
  * Website: https://charuru.moe
@@ -98,7 +98,20 @@ class Validator {
         return !($this->startValidation());
     }
     
-    private function startValidation() {
+    /**
+     * Determines if the data passes the validation rules, or throws.
+     *
+     * @return bool
+     * @throws \RuntimeException
+     */
+    function throw() {
+        return $this->startValidation(true);
+    }
+    
+    /**
+     * @throws \Exception
+     */
+    private function startValidation($throws = false) {
         if(!is_array($this->fields) OR !is_array($this->rules)) {
             return false;
         }
@@ -165,6 +178,9 @@ class Validator {
                 } elseif($nullable === true AND isset($this->errors[$key])) {
                     unset($this->errors[$key]);
                 }
+            }
+            
+                throw new \RuntimeException($key.' '.lcfirst($this->errors[$key]));
             }
         }
         
