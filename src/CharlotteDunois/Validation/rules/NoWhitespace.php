@@ -1,7 +1,7 @@
 <?php
 /**
  * Validator
- * Copyright 2017 Charlotte Dunois, All Rights Reserved
+ * Copyright 2017-2018 Charlotte Dunois, All Rights Reserved
  *
  * Docs: https://laravel.com/docs/5.2/validation
  * Website: https://charuru.moe
@@ -10,10 +10,14 @@
 
 namespace CharlotteDunois\Validation\Rule;
 
-class Required implements \CharlotteDunois\Validation\ValidationRule {
+class NoWhitespace implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
-        if(($exists === false OR is_null($value) OR (is_string($value) === true AND trim($value) === '')) AND (!isset($_FILES[$key]) OR $_FILES[$key]['error'] != 0)) {
-            return 'formvalidator_make_required';
+        if($exists === false) {
+            return null;
+        }
+        
+        if(preg_match('/\s/u', $value) === 1) {
+            return 'formvalidator_make_no_whitespace';
         }
         
         return true;

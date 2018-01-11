@@ -10,14 +10,18 @@
 
 namespace CharlotteDunois\Validation\Rule;
 
-class Regex implements \CharlotteDunois\Validation\ValidationRule {
+class Uppercase implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {
             return null;
         }
         
-        if(preg_match($options, $value) === 0) {
-            return 'formvalidator_make_regex';
+        if(!is_string($value)) {
+            return 'formvalidator_make_string';
+        }
+        
+        if(mb_strtoupper($value) !== $value) {
+            return 'formvalidator_make_uppercase';
         }
         
         return true;
