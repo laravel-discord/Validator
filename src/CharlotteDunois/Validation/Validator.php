@@ -180,6 +180,7 @@ class Validator {
                 }
             }
             
+            if($throws === true) {
                 throw new \RuntimeException($key.' '.lcfirst($this->errors[$key]));
             }
         }
