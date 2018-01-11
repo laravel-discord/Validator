@@ -20,8 +20,12 @@ class TypeRule implements \CharlotteDunois\Validation\ValidationRule {
             return array('formvalidator_make_array_subtype', array('{0}' => $options));
         }
         
+        if($options == 'float') {
+            $options = 'double';
+        }
+        
         foreach($value as $val) {
-            if(!is_string($val)) {
+            if(gettype($val) != $options) {
                 return array('formvalidator_make_array_subtype', array('{0}' => $options));
             }
         }
