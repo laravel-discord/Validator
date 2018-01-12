@@ -20,6 +20,19 @@ class ArrayRule implements \CharlotteDunois\Validation\ValidationRule {
             return 'formvalidator_make_array';
         }
         
+        if(!empty($options) {
+            foreach($value as $val) {
+                $type = gettype($val);
+                if($type === 'double') {
+                    $type = 'float';
+                }
+                
+                if($type != $options) {
+                    return array('formvalidator_make_array_subtype', array('{0}' => $options));
+                }
+            }
+        }
+        
         return true;
     }
 }
