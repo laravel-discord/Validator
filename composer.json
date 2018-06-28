@@ -1,7 +1,7 @@
 {
     "name": "charlottedunois/validator",
     "type": "library",
-    "description": "Pure PHP Implementation based on Laravel's Validator.",
+    "description": "PHP Validator for stuff.",
     "keywords": [ "validation" ],
     "homepage": "https://github.com/CharlotteDunois/Validator",
     "license": "MIT",
