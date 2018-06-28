@@ -16,7 +16,7 @@ class FunctionRule implements \CharlotteDunois\Validation\ValidationRule {
             return null;
         }
         
-        if(!is_callable($value)) {
+        if(!($value instanceof \Closure)) {
             return 'formvalidator_make_anon_function';
         }
         
