@@ -4,6 +4,5 @@ sami/*
 sami.*
 vendor
 vendor/*
-*.token
 composer.lock
 index.php
