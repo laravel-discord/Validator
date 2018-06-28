@@ -1,10 +1,8 @@
-Validator
-==================
+# Validator
 
 This is a PHP validator for stuff.
 
-Usage
-==================
+# Usage
 Include file and initialize an instance.
 
 ```php
@@ -19,3 +17,6 @@ var_dump($nofail->passes());
 $fail = CharlotteDunois\Validation\Validator::make(array('username' => 'CharlotteDuois', 'email' => 'noreply@githubcom'), array('username' => 'string|required|min:5|max:75', 'email' => 'email'));
 var_dump($fail->passes(), $fail->errors());
 ```
+
+# Documentation
+https://charlottedunois.github.io/Validator/
