@@ -10,7 +10,7 @@
 
 namespace CharlotteDunois\Validation\Rule;
 
-class AnonFunction implements \CharlotteDunois\Validation\ValidationRule {
+class FunctionRule implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {
             return null;
