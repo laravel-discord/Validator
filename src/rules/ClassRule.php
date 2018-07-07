@@ -16,7 +16,7 @@ class ClassRule implements \CharlotteDunois\Validation\ValidationRule {
             return null;
         }
         
-        if(!is_string($value) || !class_exists($value)) {
+        if(!is_string($value) || !is_object($value) || (is_string($value) && !class_exists($value))) {
             return 'formvalidator_make_class';
         }
         
