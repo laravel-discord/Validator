@@ -34,7 +34,7 @@ class ClassRule implements \CharlotteDunois\Validation\ValidationRule {
         }
         
         if(!is_a($value, $class, true) && !in_array($class, class_parents($value)) && !in_array($class, class_implements($value))) {
-            return array('formvalidator_make_class_inheritance', array('{0}' => $options));
+            return array('formvalidator_make_class_inheritance', array('{0}' => $class));
         }
         
         return true;
