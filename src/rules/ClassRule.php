@@ -16,16 +16,24 @@ class ClassRule implements \CharlotteDunois\Validation\ValidationRule {
             return null;
         }
         
-        if(!is_string($value) && !is_object($value)) {
+        $is_string = is_string($value);
+        
+        $options = explode(',', $options);
+        $class = ltrim($options[0], '\\');
+        
+        if(!empty($options[1]) && $options[1] === 'string_only' && !$is_string) {
+            return 'formvalidator_make_class_stringonly';
+        }
+        
+        if(!$is_string && !is_object($value)) {
             return 'formvalidator_make_class';
         }
         
-        if(is_string($value) && !class_exists($value)) {
+        if($is_string && !class_exists($value)) {
             return 'formvalidator_make_class';
         }
         
-        $options = ltrim($options, '\\');
-        if(!is_a($options, $value, true) && !in_array($options, class_parents($value)) && !in_array($options, class_implements($value))) {
+        if(!is_a($value, $class, true) && !in_array($class, class_parents($value)) && !in_array($class, class_implements($value))) {
             return array('formvalidator_make_class_inheritance', array('{0}' => $options));
         }
         
