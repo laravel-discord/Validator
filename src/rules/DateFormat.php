@@ -10,9 +10,9 @@
 namespace CharlotteDunois\Validation\Rule;
 
 /**
- * Name: `date_format`
+ * Name: `dateformat`
  *
- * This rule ensures a specific field is a date in a specific format. Usage: `date_format:FORMAT`
+ * This rule ensures a specific field is a date in a specific format. Usage: `dateformat:FORMAT`
  */
 class Date_Format implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
