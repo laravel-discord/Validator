@@ -3,7 +3,6 @@
  * Validator
  * Copyright 2017 Charlotte Dunois, All Rights Reserved
  *
- * Docs: https://laravel.com/docs/5.2/validation
  * Website: https://charuru.moe
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
 **/
@@ -12,6 +11,7 @@ namespace CharlotteDunois\Validation\Rule;
 
 /**
  * Name: `min`
+ *
  * This rule ensures a specific field is/has:
  *   - numeric: equal/greater than the specified value
  *   - file: filesize is equal/greater than the specified value (in kibibytes)

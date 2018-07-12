@@ -3,7 +3,6 @@
  * Validator
  * Copyright 2017 Charlotte Dunois, All Rights Reserved
  *
- * Docs: https://laravel.com/docs/5.2/validation
  * Website: https://charuru.moe
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
 **/
@@ -12,6 +11,7 @@ namespace CharlotteDunois\Validation\Rule;
 
 /**
  * Name: `date_format`
+ *
  * This rule ensures a specific field is a date in a specific format. Usage: `date_format:FORMAT`
  */
 class Date_Format implements \CharlotteDunois\Validation\ValidationRule {

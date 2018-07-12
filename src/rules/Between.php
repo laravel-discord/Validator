@@ -3,7 +3,6 @@
  * Validator
  * Copyright 2017 Charlotte Dunois, All Rights Reserved
  *
- * Docs: https://laravel.com/docs/5.2/validation
  * Website: https://charuru.moe
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
 **/
@@ -12,6 +11,7 @@ namespace CharlotteDunois\Validation\Rule;
 
 /**
  * Name: `between`
+ *
  * This rule ensures a specific field is a value between two options, inclusive. Usage: `before:VALUE_MIN,VALUE_MAX`
  */
 class Between implements \CharlotteDunois\Validation\ValidationRule {

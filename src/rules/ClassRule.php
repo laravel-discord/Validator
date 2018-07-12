@@ -3,7 +3,6 @@
  * Validator
  * Copyright 2017 Charlotte Dunois, All Rights Reserved
  *
- * Docs: https://laravel.com/docs/5.2/validation
  * Website: https://charuru.moe
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
 **/
@@ -12,8 +11,10 @@ namespace CharlotteDunois\Validation\Rule;
 
 /**
  * Name: `class` - Type Rule
+ *
  * This rule ensures a specific field is a string containing a valid class name or a class instance.
  * The options value ensures the class is either of that type, or extending it or implementing it.
+ *
  * Usage: `class` or `class:CLASS_NAME`
  */
 class ClassRule implements \CharlotteDunois\Validation\ValidationRule {
