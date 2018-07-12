@@ -10,6 +10,10 @@
 
 namespace CharlotteDunois\Validation\Rule;
 
+/**
+ * Name: `numeric`
+ * This rule ensures a specific field is numeric.
+ */
 class Numeric implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {

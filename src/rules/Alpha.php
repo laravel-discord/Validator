@@ -10,6 +10,10 @@
 
 namespace CharlotteDunois\Validation\Rule;
 
+/**
+ * Name: `alpha`
+ * This rule ensures a specific field contains only alpha characters.
+ */
 class Alpha implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {

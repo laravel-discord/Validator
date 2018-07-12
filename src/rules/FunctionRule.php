@@ -10,6 +10,10 @@
 
 namespace CharlotteDunois\Validation\Rule;
 
+/**
+ * Name: `function` - Type Rule
+ * This rule ensures a specific field is a function (closure).
+ */
 class FunctionRule implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {

@@ -10,6 +10,10 @@
 
 namespace CharlotteDunois\Validation\Rule;
 
+/**
+ * Name: `uppercase`
+ * This rule ensures a specific field is all uppercase.
+ */
 class Uppercase implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {

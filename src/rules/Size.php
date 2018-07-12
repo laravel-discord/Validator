@@ -10,13 +10,21 @@
 
 namespace CharlotteDunois\Validation\Rule;
 
+/**
+ * Name: `size`
+ * This rule ensures a specific field is/has:
+ *   - numeric: equal to the specified value
+ *   - file: filesize is equal to the specified value (in kibibytes)
+ *   - array: equal elements as specified value
+ *   - string: equal characters as specified value
+ */
 class Size implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {
             return null;
         }
         
-        if(isset($_FILES[$key]) AND file_exists($_FILES[$key]['tmp_name']) AND $_FILES[$key]['error'] == 0) {
+        if(isset($_FILES[$key]) && file_exists($_FILES[$key]['tmp_name']) && $_FILES[$key]['error'] == 0) {
             $v = round((filesize($_FILES[$key]['tmp_name']) / 1024));
         } elseif(is_array($value)) {
             $v = count($value);

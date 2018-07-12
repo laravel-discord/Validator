@@ -10,6 +10,10 @@
 
 namespace CharlotteDunois\Validation\Rule;
 
+/**
+ * Name: `date_format`
+ * This rule ensures a specific field is a date in a specific format. Usage: `date_format:FORMAT`
+ */
 class Date_Format implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {
@@ -17,7 +21,7 @@ class Date_Format implements \CharlotteDunois\Validation\ValidationRule {
         }
         
         $dt = date_parse_from_format($options, $value);
-        if($dt === false OR $dt['errorcount'] > 0) {
+        if($dt === false || $dt['errorcount'] > 0) {
             return array('formvalidator_make_date_format', array('{0}' => $options));
         }
         

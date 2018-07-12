@@ -10,13 +10,18 @@
 
 namespace CharlotteDunois\Validation\Rule;
 
+/**
+ * Name: `json`
+ * This rule ensures a specific field is a valid JSON string.
+ */
 class JSON implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {
             return null;
         }
         
-        if(json_decode($value) === false) {
+        json_decode($value);
+        if(json_last_error() !== JSON_ERROR_NONE) {
             return 'formvalidator_make_json';
         }
         

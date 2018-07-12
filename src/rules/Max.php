@@ -10,14 +10,24 @@
 
 namespace CharlotteDunois\Validation\Rule;
 
+/**
+ * Name: `max`
+ * This rule ensures a specific field is/has:
+ *   - numeric: equal/smaller than the specified value
+ *   - file: filesize is equal/smaller than the specified value (in kibibytes)
+ *   - array: equal/less elements than specified value
+ *   - string: equal/less characters than specified value
+ *
+ * Usage: `max:VALUE`
+ */
 class Max implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {
             return null;
         }
         
-        if(isset($_FILES[$key]) AND file_exists($_FILES[$key]['tmp_name']) AND $_FILES[$key]['error'] == 0) {
-            $v = filesize($_FILES[$key]['tmp_name']);
+        if(isset($_FILES[$key]) && file_exists($_FILES[$key]['tmp_name']) && $_FILES[$key]['error'] == 0) {
+            $v = round((filesize($_FILES[$key]['tmp_name']) / 1024));
         } elseif(is_array($value)) {
             $v = count($value);
         } elseif(is_numeric($value)) {

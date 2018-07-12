@@ -10,6 +10,10 @@
 
 namespace CharlotteDunois\Validation\Rule;
 
+/**
+ * Name: `between`
+ * This rule ensures a specific field is a value between two options, inclusive. Usage: `before:VALUE_MIN,VALUE_MAX`
+ */
 class Between implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {
@@ -17,7 +21,7 @@ class Between implements \CharlotteDunois\Validation\ValidationRule {
         }
         
         $n = explode(',', $options);
-        if($n[0] > $value OR $value > $n[1]) {
+        if($n[0] > $value || $value > $n[1]) {
             return array('formvalidator_make_between', array('{0}' => $r[1]));
         }
         

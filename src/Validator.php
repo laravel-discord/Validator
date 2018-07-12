@@ -11,7 +11,8 @@
 namespace CharlotteDunois\Validation;
 
 /**
- * Pure PHP implementation based on Laravel's Validator.
+ * The Validator.
+ * Type Rules are non-exclusive (that means specifying two type rules means either one is passing).
  */
 class Validator {
     private $errors = array();
@@ -22,7 +23,6 @@ class Validator {
     private $lang_words = array();
     
     private static $rulesets = array();
-    
     private static $langrules = array();
     
     private function __construct($fields, $rules, $lang) {
@@ -59,19 +59,17 @@ class Validator {
     
     /**
      * Create a new Validator instance.
-     *
      * @param  array    $fields   The fields you wanna run the validation against.
      * @param  array    $rules    The validation rules.
      * @param  string   $lang     The language for error messages (included are 'en' or 'de').
      * @return Validator
      */
-    static function make($fields, $rules, $lang = 'en') {
+    static function make(array $fields, array $rules, string $lang = 'en') {
         return new Validator($fields, $rules, $lang);
     }
     
     /**
-     * Return errors
-     *
+     * Returns errors.
      * @return array
      */
     function errors() {
@@ -80,8 +78,8 @@ class Validator {
     
     /**
      * Determine if the data passes the validation rules.
-     *
      * @return bool
+     * @throws \RuntimeException
      */
     function passes() {
         return $this->startValidation();
@@ -89,8 +87,8 @@ class Validator {
     
     /**
      * Determine if the data fails the validation rules.
-     *
      * @return bool
+     * @throws \RuntimeException
      */
     function fails() {
         return !($this->startValidation());
@@ -98,21 +96,23 @@ class Validator {
     
     /**
      * Determines if the data passes the validation rules, or throws.
-     *
+     * @param string  $class  Which exception class to throw.
      * @return bool
      * @throws \RuntimeException
      */
-    function throw() {
-        return $this->startValidation(true);
+    function throw(string $class = '\RuntimeException') {
+        return $this->startValidation($class);
     }
     
     /**
-     * @throws \Exception
+     * @throws \RuntimeException
      */
-    private function startValidation($throws = false) {
-        if(!is_array($this->fields) OR !is_array($this->rules)) {
+    private function startValidation(string $throws = '') {
+        if(!is_array($this->fields) || !is_array($this->rules)) {
             return false;
         }
+        
+        $vThrows = !empty($throws);
         
         $istate = array();
         foreach($this->rules as $key => $rule) {
@@ -131,13 +131,13 @@ class Validator {
                     $nullable = true;
                     continue;
                 } elseif(!isset(self::$rulesets[$r[0]])) {
-                   throw new \Exception('Validation Rule "'.$r[0].'" does not exist');
+                   throw new \RuntimeException('Validation Rule "'.$r[0].'" does not exist');
                 }
                 
                 $passed = true;
                 
                 $return = self::$rulesets[$r[0]]->validate($value, $key, $this->fields, (array_key_exists(1, $r) ? $r[1] : NULL), $exists, $this);
-                if(is_string($return) OR is_array($return)) {
+                if(is_string($return) || is_array($return)) {
                     $passed = false;
                 }
                 
@@ -165,21 +165,21 @@ class Validator {
                 }
             }
             
-            if($passedLang === true AND $failedOtherRules === false) {
+            if($passedLang === true && $failedOtherRules === false) {
                 unset($this->errors[$key]);
             }
             
-            if($exists === true AND is_null($value)) {
+            if($exists === true && is_null($value)) {
                 if($nullable === false) {
                     $istate[] = false;
                     $this->errors[$key] = $this->language('formvalidator_make_nullable');
-                } elseif($nullable === true AND isset($this->errors[$key])) {
+                } elseif($nullable === true && isset($this->errors[$key])) {
                     unset($this->errors[$key]);
                 }
             }
             
-            if(!empty($this->errors[$key]) AND $throws === true) {
-                throw new \RuntimeException($key.' '.lcfirst($this->errors[$key]));
+            if(!empty($this->errors[$key]) && $vThrows) {
+                throw new $throws($key.' '.lcfirst($this->errors[$key]));
             }
         }
         

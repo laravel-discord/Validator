@@ -10,13 +10,17 @@
 
 namespace CharlotteDunois\Validation\Rule;
 
+/**
+ * Name: `filled`
+ * This rule ensures a specific field exists and not empty.
+ */
 class Filled implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {
             return null;
         }
         
-        if(isset($fields[$key]) AND empty($fields[$key])) {
+        if(isset($fields[$key]) && empty($fields[$key])) {
             return 'formvalidator_make_filled';
         }
         

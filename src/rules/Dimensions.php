@@ -10,13 +10,18 @@
 
 namespace CharlotteDunois\Validation\Rule;
 
+/**
+ * Name: `dimensions`
+ * This rule ensures a specific upload field contains an image with the required dimensions. The following options exist: `min_width`, `min_height`, `width`, `height`, `max_width`, `max_height`, `ratio`.
+ * Multiple options can be used using comma separators. Usage: `dimensions:OPTION=VALUE`
+ */
 class Dimensions implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {
             return null;
         }
         
-        if(!isset($_FILES[$key]) OR !file_exists($_FILES[$key]['tmp_name'])) {
+        if(!isset($_FILES[$key]) || !file_exists($_FILES[$key]['tmp_name'])) {
             return 'formvalidator_make_invalid_file';
         }
         

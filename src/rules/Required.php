@@ -10,9 +10,13 @@
 
 namespace CharlotteDunois\Validation\Rule;
 
+/**
+ * Name: `required`
+ * This rule ensures a specific (upload) field is present and not empty.
+ */
 class Required implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
-        if(($exists === false OR is_null($value) OR (is_string($value) === true AND trim($value) === '')) AND (!isset($_FILES[$key]) OR $_FILES[$key]['error'] != 0)) {
+        if(($exists === false || is_null($value) || (is_string($value) === true && trim($value) === '')) && (!isset($_FILES[$key]) || $_FILES[$key]['error'] != 0)) {
             return 'formvalidator_make_required';
         }
         

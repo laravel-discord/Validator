@@ -10,6 +10,10 @@
 
 namespace CharlotteDunois\Validation\Rule;
 
+/**
+ * Name: `in`
+ * This rule ensures a specific field is one of the specified values (comma separated). Usage: `in:VALUE_1,VALUE_2,...`
+ */
 class In implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {

@@ -10,6 +10,12 @@
 
 namespace CharlotteDunois\Validation\Rule;
 
+/**
+ * Name: `class` - Type Rule
+ * This rule ensures a specific field is a string containing a valid class name or a class instance.
+ * The options value ensures the class is either of that type, or extending it or implementing it.
+ * Usage: `class` or `class:CLASS_NAME`
+ */
 class ClassRule implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {

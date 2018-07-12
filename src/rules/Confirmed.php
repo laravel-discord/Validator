@@ -10,6 +10,10 @@
 
 namespace CharlotteDunois\Validation\Rule;
 
+/**
+ * Name: `confirmed`
+ * This rule ensures a specific field is confirmed (the fields contain another field with `FIELDNAME_OPTIONS`). Usage: `confirmed:confirmed`
+ */
 class Confirmed implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {
@@ -20,7 +24,7 @@ class Confirmed implements \CharlotteDunois\Validation\ValidationRule {
             $options = 'confirmation';
         }
         
-        if(!isset($fields[$key.'_'.$options]) OR $fields[$key] !== $fields[$key.'_'.$options]) {
+        if(!isset($fields[$key.'_'.$options]) || $fields[$key] !== $fields[$key.'_'.$options]) {
             return 'formvalidator_make_confirmed';
         }
         

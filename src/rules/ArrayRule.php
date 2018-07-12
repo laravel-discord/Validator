@@ -10,6 +10,10 @@
 
 namespace CharlotteDunois\Validation\Rule;
 
+/**
+ * Name: `array` - Type Rule
+ * This rule ensures a specific field is an array, or an array with only the specified type. Usage: `array` or `array:TYPE`
+ */
 class ArrayRule implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {

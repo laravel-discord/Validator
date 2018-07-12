@@ -10,6 +10,10 @@
 
 namespace CharlotteDunois\Validation\Rule;
 
+/**
+ * Name: `regex`
+ * This rule ensures a specific field passed the regex validation. Usage: `regex:REGEX_WITH_DELIMITERS`
+ */
 class Regex implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {
