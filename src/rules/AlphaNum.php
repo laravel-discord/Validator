@@ -11,10 +11,10 @@
 namespace CharlotteDunois\Validation\Rule;
 
 /**
- * Name: `alpha_num`
+ * Name: `alphanum`
  * This rule ensures a specific field contains only alphanumeric characters.
  */
-class Alpha_Num implements \CharlotteDunois\Validation\ValidationRule {
+class AlphaNum implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {
             return null;

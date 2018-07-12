@@ -11,17 +11,17 @@
 namespace CharlotteDunois\Validation\Rule;
 
 /**
- * Name: `alpha_dash`
- * This rule ensures a specific field contains only alpha, dash and underscores characters.
+ * Name: `activeurl`
+ * This rule ensures a specific field is an active URL (has a DNS record).
  */
-class Alpha_Dash implements \CharlotteDunois\Validation\ValidationRule {
+class ActiveURL implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if($exists === false) {
             return null;
         }
         
-        if(mb_ereg("/^([^A-Za-z\-_]+)$/i", $value)) {
-            return 'formvalidator_make_alpha_dash';
+        if(!checkdnsrr($value)) {
+            return 'formvalidator_make_active_url';
         }
         
         return true;
