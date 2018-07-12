@@ -10,8 +10,6 @@
 
 namespace CharlotteDunois\Validation;
 
-include_once(__DIR__.'/ValidationRule.php');
-
 /**
  * Pure PHP implementation based on Laravel's Validator.
  */
