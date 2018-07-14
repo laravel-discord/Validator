@@ -42,37 +42,37 @@ class Dimensions implements \CharlotteDunois\Validation\ValidationRule {
         foreach($n as $x) {
             $k = explode('=', $x);
             switch($k[0]) {
-                case 'min_width':
+                case 'min_width': // @codeCoverageIgnore
                     if($k[1] > $size[0]) {
                         return array('formvalidator_make_min_width', array('{0}' => $options));
                     }
                 break;
-                case 'min_height':
+                case 'min_height': // @codeCoverageIgnore
                     if($k[1] > $size[1]) {
                         return array('formvalidator_make_min_height', array('{0}' => $options));
                     }
                 break;
-                case 'width':
+                case 'width': // @codeCoverageIgnore
                     if($k[1] != $size[0]) {
                         return array('formvalidator_make_width', array('{0}' => $options));
                     }
                 break;
-                case 'height':
+                case 'height': // @codeCoverageIgnore
                     if($k[1] != $size[1]) {
                         return array('formvalidator_make_height', array('{0}' => $options));
                     }
                 break;
-                case 'max_width':
+                case 'max_width': // @codeCoverageIgnore
                     if($k[1] < $size[0]) {
                         return array('formvalidator_make_max_width', array('{0}' => $options));
                     }
                 break;
-                case 'max_height':
+                case 'max_height': // @codeCoverageIgnore
                     if($k[1] < $size[1]) {
                         return array('formvalidator_make_max_height', array('{0}' => $options));
                     }
                 break;
-                case 'ratio':
+                case 'ratio': // @codeCoverageIgnore
                     if(mb_strpos($k[1], '/') !== false) {
                         $k[1] = explode('/', $k[1]);
                         $k[1] = $k[1][0] / $k[1][1];
