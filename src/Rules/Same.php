@@ -15,6 +15,9 @@ namespace CharlotteDunois\Validation\Rules;
  * This rule ensures a specific field is the same as another existing field. Usage: `same:FIELD_NAME`
  */
 class Same implements \CharlotteDunois\Validation\ValidationRule {
+    /**
+     * {@inheritdoc}
+     */
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if(!$exists) {
             return false;

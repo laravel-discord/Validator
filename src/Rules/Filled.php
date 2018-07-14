@@ -15,6 +15,9 @@ namespace CharlotteDunois\Validation\Rules;
  * This rule ensures a specific field exists and not empty.
  */
 class Filled implements \CharlotteDunois\Validation\ValidationRule {
+    /**
+     * {@inheritdoc}
+     */
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if(!$exists || empty($fields[$key])) {
             return 'formvalidator_make_filled';

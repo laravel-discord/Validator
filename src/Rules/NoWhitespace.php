@@ -15,6 +15,9 @@ namespace CharlotteDunois\Validation\Rules;
  * This rule ensures a specific field contains no whitespaces.
  */
 class NoWhitespace implements \CharlotteDunois\Validation\ValidationRule {
+    /**
+     * {@inheritdoc}
+     */
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if(!$exists) {
             return false;

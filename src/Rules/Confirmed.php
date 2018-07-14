@@ -15,6 +15,9 @@ namespace CharlotteDunois\Validation\Rules;
  * This rule ensures a specific field is confirmed (the fields array contains another field with the same value with the key `$key_FIELDNAME`, FIELDNAME defaults to `confirmation`). Usage: `confirmed` or `confirmed:FIELDNAME`
  */
 class Confirmed implements \CharlotteDunois\Validation\ValidationRule {
+    /**
+     * {@inheritdoc}
+     */
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if(!$exists) {
             return false;

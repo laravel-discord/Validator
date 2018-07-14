@@ -16,6 +16,9 @@ namespace CharlotteDunois\Validation\Rules;
  * Multiple options can be used using comma separators. Usage: `dimensions:OPTION=VALUE`
  */
 class Dimensions implements \CharlotteDunois\Validation\ValidationRule {
+    /**
+     * {@inheritdoc}
+     */
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if(isset($_FILES[$key])) {
             if(!file_exists($_FILES[$key]['tmp_name'])) {

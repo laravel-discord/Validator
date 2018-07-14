@@ -133,8 +133,6 @@ class Validator {
                    throw new \RuntimeException('Validation Rule "'.$r[0].'" does not exist');
                 }
                 
-                $passed = true;
-                
                 $return = self::$rulesets[$r[0]]->validate($value, $key, $this->fields, (array_key_exists(1, $r) ? $r[1] : NULL), $exists, $this);
                 $passed = is_bool($return);
                 

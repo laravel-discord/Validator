@@ -15,6 +15,9 @@ namespace CharlotteDunois\Validation\Rules;
  * This rule ensures a specific field is a numeric value (string) with the specified length. Usage: `digits:LENGTH`
  */
 class Digits implements \CharlotteDunois\Validation\ValidationRule {
+    /**
+     * {@inheritdoc}
+     */
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if(!$exists) {
             return false;

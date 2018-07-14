@@ -15,6 +15,9 @@ namespace CharlotteDunois\Validation\Rules;
  * This rule ensures a specific upload field is an image. Usage: `image:FIELD_NAME`
  */
 class Image implements \CharlotteDunois\Validation\ValidationRule {
+    /**
+     * {@inheritdoc}
+     */
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if(isset($_FILES[$key])) {
             if(!file_exists($_FILES[$key]['tmp_name'])) {

@@ -15,6 +15,9 @@ namespace CharlotteDunois\Validation\Rules;
  * This rule ensures a specific upload field is of specific mime type (comma separated). Valid options (examples): `image/*`, `*­/*`, `image/png`. Usage: `mimetypes:MIME_TYPE`
  */
 class MimeTypes implements \CharlotteDunois\Validation\ValidationRule {
+    /**
+     * {@inheritdoc}
+     */
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         $finfo = finfo_open(FILEINFO_MIME);
         

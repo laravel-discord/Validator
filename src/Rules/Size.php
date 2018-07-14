@@ -19,6 +19,9 @@ namespace CharlotteDunois\Validation\Rules;
  *   - string: equal characters as specified value
  */
 class Size implements \CharlotteDunois\Validation\ValidationRule {
+    /**
+     * {@inheritdoc}
+     */
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if(isset($_FILES[$key]) && file_exists($_FILES[$key]['tmp_name']) && $_FILES[$key]['error'] == 0) {
             $v = round((filesize($_FILES[$key]['tmp_name']) / 1024));
