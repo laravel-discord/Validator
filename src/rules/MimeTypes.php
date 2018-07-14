@@ -7,7 +7,7 @@
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
 **/
 
-namespace CharlotteDunois\Validation\Rule;
+namespace CharlotteDunois\Validation\Rules;
 
 /**
  * Name: `mimetypes`
@@ -16,27 +16,38 @@ namespace CharlotteDunois\Validation\Rule;
  */
 class MimeTypes implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
-        if($exists === false) {
-            return null;
+        $finfo = finfo_open(FILEINFO_MIME);
+        
+        if(isset($_FILES[$key])) {
+            if(!file_exists($_FILES[$key]['tmp_name'])) {
+                return 'formvalidator_make_invalid_file';
+            }
+            
+            $mime = finfo_file($finfo, $_FILES[$key]['tmp_name']);
+        } else {
+            if(!$exists) {
+                return false;
+            }
+            
+            $mime = finfo_buffer($finfo, $value);
         }
         
-        if(!isset($_FILES[$key]) || !file_exists($_FILES[$key]['tmp_name']) || $_FILES[$key]['error'] != 0) {
-            return 'formvalidator_make_invalid_file';
+        finfo_close($finfo);
+        
+        if(!$mime) {
+            return 'formvalidator_make_invalid_file'; // @codeCoverageIgnore
         }
         
-        $mime = mime_content_type($_FILES[$key]['tmp_name']);
+        $mime = explode(';', $mime);
+        $mime = array_shift($mime);
         
         $val = explode(',', $options);
-        if(empty($val)) {
-            return true;
-        }
-        
         $result = explode('/', $mime);
         
-        foreach($val as $mime) {
-            $mime = explode('/', $mime);
-            if(count($mime) == 2 && count($result) == 2) {
-                if(($mime[0] == "*" || $mime[0] == $result[0]) && ($mime[1] == "*" || $mime[1] == $result[1])) {
+        foreach($val as $mimet) {
+            $mimee = explode('/', $mimet);
+            if(count($mimee) == 2 && count($result) == 2) {
+                if(($mimee[0] == "*" || $mimee[0] == $result[0]) && ($mimee[1] == "*" || $mimee[1] == $result[1])) {
                     return true;
                 }
             }

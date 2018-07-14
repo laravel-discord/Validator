@@ -24,7 +24,7 @@ class Validator {
     private static $rulesets = array();
     private static $langrules = array();
     
-    private function __construct($fields, $rules, $lang) {
+    private function __construct(array $fields, array $rules, string $lang) {
         $this->fields = $fields;
         $this->rules = $rules;
         $this->lang = $lang;
@@ -32,26 +32,13 @@ class Validator {
         if(empty(self::$rulesets)) {
             $rules = glob(__DIR__.'/rules/*.php');
             foreach($rules as $rule) {
-                try {
-                    $arrname = explode('/', $rule);
-                    $name = mb_substr(array_pop($arrname), 0, -4);
-                    include_once($rule);
-                    
-                    $class = '\\CharlotteDunois\\Validation\\Rule\\'.$name;
-                    $ruleset = new $class();
-                    $interfaces = class_implements($ruleset);
-                    
-                    if(in_array('CharlotteDunois\\Validation\\ValidationRule', $interfaces)) {
-                        $rname = str_replace('rule', '', mb_strtolower($name));
-                        self::$rulesets[$rname] = $ruleset;
-                        
-                        if(mb_stripos($name, 'rule') !== false) {
-                            self::$langrules[] = $rname;
-                        }
-                    }
-                } catch(Exception $e) {
-                    /* Continue regardless of error */
+                $name = basename($rule, '.php');
+                if($name === 'Nullable') {
+                    continue;
                 }
+                
+                $class = '\\CharlotteDunois\\Validation\\Rules\\'.$name;
+                static::addRule((new $class()));
             }
         }
     }
@@ -64,7 +51,25 @@ class Validator {
      * @return Validator
      */
     static function make(array $fields, array $rules, string $lang = 'en') {
-        return new Validator($fields, $rules, $lang);
+        return (new static($fields, $rules, $lang));
+    }
+    
+    /**
+     * Adds a new rule.
+     * @param \CharlotteDunois\Validation\ValidationRule  $rule
+     * @throws \InvalidArgumentException
+     */
+    static function addRule(\CharlotteDunois\Validation\ValidationRule $rule) {
+        $class = get_class($rule);
+        $arrname = explode('\\', $class);
+        $name = array_pop($arrname);
+        
+        $rname = str_replace('rule', '', mb_strtolower($name));
+        self::$rulesets[$rname] = $rule;
+        
+        if(mb_stripos($name, 'rule') !== false) {
+            self::$langrules[] = $rname;
+        }
     }
     
     /**
@@ -107,13 +112,8 @@ class Validator {
      * @throws \RuntimeException
      */
     private function startValidation(string $throws = '') {
-        if(!is_array($this->fields) || !is_array($this->rules)) {
-            return false;
-        }
-        
         $vThrows = !empty($throws);
         
-        $istate = array();
         foreach($this->rules as $key => $rule) {
             $set = explode('|', $rule);
             
@@ -126,9 +126,9 @@ class Validator {
             $nullable = false;
             foreach($set as $r) {
                 $r = explode(':', $r);
-                if($r[0] == 'nullable') {
+                if($r[0] === 'nullable') {
                     $nullable = true;
-                    continue;
+                    continue 1;
                 } elseif(!isset(self::$rulesets[$r[0]])) {
                    throw new \RuntimeException('Validation Rule "'.$r[0].'" does not exist');
                 }
@@ -136,26 +136,23 @@ class Validator {
                 $passed = true;
                 
                 $return = self::$rulesets[$r[0]]->validate($value, $key, $this->fields, (array_key_exists(1, $r) ? $r[1] : NULL), $exists, $this);
-                if(is_string($return) || is_array($return)) {
-                    $passed = false;
-                }
+                $passed = is_bool($return);
                 
                 if(in_array($r[0], self::$langrules)) {
-                    if($passed === true) {
+                    if($passed) {
                         $passedLang = true;
                     } else {
-                        if($passedLang === false) {
+                        if(!$passedLang) {
                             $passed = false;
                         }
                     }
                 } else {
-                    if($passed === false) {
+                    if(!$passed) {
                         $failedOtherRules = true;
                     }
                 }
                 
-                if($passed === false) {
-                    $istate[] = false;
+                if(!$passed) {
                     if(is_array($return)) {
                         $this->errors[$key] = $this->language($return[0], $return[1]);
                     } else {
@@ -164,29 +161,24 @@ class Validator {
                 }
             }
             
-            if($passedLang === true && $failedOtherRules === false) {
+            if($passedLang && !$failedOtherRules) {
                 unset($this->errors[$key]);
             }
             
-            if($exists === true && is_null($value)) {
-                if($nullable === false) {
-                    $istate[] = false;
+            if($exists && is_null($value)) {
+                if(!$nullable) {
                     $this->errors[$key] = $this->language('formvalidator_make_nullable');
-                } elseif($nullable === true && isset($this->errors[$key])) {
+                } elseif($nullable && isset($this->errors[$key])) {
                     unset($this->errors[$key]);
                 }
             }
             
-            if(!empty($this->errors[$key]) && $vThrows) {
+            if($vThrows && !empty($this->errors[$key])) {
                 throw new $throws($key.' '.lcfirst($this->errors[$key]));
             }
         }
         
-        if(empty($this->errors)) {
-            return true;
-        }
-        
-        return false;
+        return empty($this->errors);
     }
     
     /**

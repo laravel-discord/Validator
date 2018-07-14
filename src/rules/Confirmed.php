@@ -7,17 +7,17 @@
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
 **/
 
-namespace CharlotteDunois\Validation\Rule;
+namespace CharlotteDunois\Validation\Rules;
 
 /**
  * Name: `confirmed`
  *
- * This rule ensures a specific field is confirmed (the fields contain another field with `FIELDNAME_OPTIONS`). Usage: `confirmed:confirmed`
+ * This rule ensures a specific field is confirmed (the fields array contains another field with the same value with the key `$key_FIELDNAME`, FIELDNAME defaults to `confirmation`). Usage: `confirmed` or `confirmed:FIELDNAME`
  */
 class Confirmed implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
-        if($exists === false) {
-            return null;
+        if(!$exists) {
+            return false;
         }
         
         if(empty($options)) {

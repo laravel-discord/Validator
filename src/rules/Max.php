@@ -7,7 +7,7 @@
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
 **/
 
-namespace CharlotteDunois\Validation\Rule;
+namespace CharlotteDunois\Validation\Rules;
 
 /**
  * Name: `max`
@@ -22,18 +22,20 @@ namespace CharlotteDunois\Validation\Rule;
  */
 class Max implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
-        if($exists === false) {
-            return null;
-        }
-        
         if(isset($_FILES[$key]) && file_exists($_FILES[$key]['tmp_name']) && $_FILES[$key]['error'] == 0) {
             $v = round((filesize($_FILES[$key]['tmp_name']) / 1024));
-        } elseif(is_array($value)) {
-            $v = count($value);
-        } elseif(is_numeric($value)) {
-            $v = $value;
         } else {
-            $v = mb_strlen($value);
+            if(!$exists) {
+                return false;
+            }
+            
+            if(is_array($value)) {
+                $v = count($value);
+            } elseif(is_numeric($value)) {
+                $v = $value;
+            } else {
+                $v = mb_strlen($value);
+            }
         }
         
         if($v > $options) {

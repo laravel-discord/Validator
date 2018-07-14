@@ -7,7 +7,7 @@
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
 **/
 
-namespace CharlotteDunois\Validation\Rule;
+namespace CharlotteDunois\Validation\Rules;
 
 /**
  * Name: `lowercase`
@@ -16,15 +16,11 @@ namespace CharlotteDunois\Validation\Rule;
  */
 class Lowercase implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
-        if($exists === false) {
-            return null;
+        if(!$exists) {
+            return false;
         }
         
-        if(!is_string($value)) {
-            return 'formvalidator_make_string';
-        }
-        
-        if(mb_strtolower($value) !== $value) {
+        if(!is_string($value) || mb_strtolower($value) !== $value) {
             return 'formvalidator_make_lowercase';
         }
         

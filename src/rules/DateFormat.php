@@ -7,7 +7,7 @@
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
 **/
 
-namespace CharlotteDunois\Validation\Rule;
+namespace CharlotteDunois\Validation\Rules;
 
 /**
  * Name: `dateformat`
@@ -16,12 +16,12 @@ namespace CharlotteDunois\Validation\Rule;
  */
 class DateFormat implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
-        if($exists === false) {
-            return null;
+        if(!$exists) {
+            return false;
         }
         
         $dt = date_parse_from_format($options, $value);
-        if($dt === false || $dt['errorcount'] > 0) {
+        if(!$dt || $dt['error_count'] > 0) {
             return array('formvalidator_make_date_format', array('{0}' => $options));
         }
         

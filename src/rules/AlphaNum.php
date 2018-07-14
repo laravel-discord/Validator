@@ -7,7 +7,7 @@
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
 **/
 
-namespace CharlotteDunois\Validation\Rule;
+namespace CharlotteDunois\Validation\Rules;
 
 /**
  * Name: `alphanum`
@@ -16,11 +16,11 @@ namespace CharlotteDunois\Validation\Rule;
  */
 class AlphaNum implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
-        if($exists === false) {
-            return null;
+        if(!$exists) {
+            return false;
         }
         
-        if(!ctype_alnum($value)) {
+        if(!is_string($value) || !ctype_alnum($value)) {
             return 'formvalidator_make_alpha_num';
         }
         

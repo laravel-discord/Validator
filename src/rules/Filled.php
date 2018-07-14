@@ -7,7 +7,7 @@
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
 **/
 
-namespace CharlotteDunois\Validation\Rule;
+namespace CharlotteDunois\Validation\Rules;
 
 /**
  * Name: `filled`
@@ -16,11 +16,7 @@ namespace CharlotteDunois\Validation\Rule;
  */
 class Filled implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
-        if($exists === false) {
-            return null;
-        }
-        
-        if(isset($fields[$key]) && empty($fields[$key])) {
+        if(!$exists || empty($fields[$key])) {
             return 'formvalidator_make_filled';
         }
         

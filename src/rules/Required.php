@@ -7,7 +7,7 @@
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
 **/
 
-namespace CharlotteDunois\Validation\Rule;
+namespace CharlotteDunois\Validation\Rules;
 
 /**
  * Name: `required`
@@ -16,7 +16,7 @@ namespace CharlotteDunois\Validation\Rule;
  */
 class Required implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
-        if(($exists === false || is_null($value) || (is_string($value) === true && trim($value) === '')) && (!isset($_FILES[$key]) || $_FILES[$key]['error'] != 0)) {
+        if((!$exists || is_null($value) || (is_string($value) === true && trim($value) === '')) && (!isset($_FILES[$key]) || $_FILES[$key]['error'] != 0)) {
             return 'formvalidator_make_required';
         }
         

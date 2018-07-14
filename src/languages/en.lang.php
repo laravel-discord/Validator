@@ -8,6 +8,7 @@
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
 **/
 
+// @codeCoverageIgnoreStart
 $l['formvalidator_make_accepted'] = 'Not accepted';
 $l['formvalidator_make_active_url'] = 'Is not an active URL';
 $l['formvalidator_make_after'] = 'Is not bigger / after than {0}';
@@ -18,10 +19,11 @@ $l['formvalidator_make_anon_function'] = 'Is not an anonymous function';
 $l['formvalidator_make_array'] = 'Is not an array';
 $l['formvalidator_make_array_subtype'] = 'Is not an array of {0} values';
 $l['formvalidator_make_before'] = 'Is smaller / before than {0}';
-$l['formvalidator_make_between'] = 'Is not between {0}';
+$l['formvalidator_make_between'] = 'Is not between {0} and {1}';
 $l['formvalidator_make_boolean'] = 'Is not a boolean value';
 $l['formvalidator_make_callable'] = 'Is not a callable';
 $l['formvalidator_make_class'] = 'Is not a class or class name';
+$l['formvalidator_make_class_objectonly'] = 'Is not a class instance';
 $l['formvalidator_make_class_stringonly'] = 'Is not a class name';
 $l['formvalidator_make_class_inheritance'] = 'Is not a class which {0} extends or implements';
 $l['formvalidator_make_confirmed'] = 'Not verified';

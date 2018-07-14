@@ -7,7 +7,7 @@
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
 **/
 
-namespace CharlotteDunois\Validation\Rule;
+namespace CharlotteDunois\Validation\Rules;
 
 /**
  * Name: `array` - Type Rule
@@ -16,8 +16,8 @@ namespace CharlotteDunois\Validation\Rule;
  */
 class ArrayRule implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
-        if($exists === false) {
-            return null;
+        if(!$exists) {
+            return false;
         }
         
         if(!is_array($value)) {
@@ -28,10 +28,10 @@ class ArrayRule implements \CharlotteDunois\Validation\ValidationRule {
             foreach($value as $val) {
                 $type = gettype($val);
                 if($type == 'double') {
-                    $type = 'float';
+                    $type = 'float'; // @codeCoverageIgnore
                 }
                 
-                if($type != $options) {
+                if($type !== $options) {
                     return array('formvalidator_make_array_subtype', array('{0}' => $options));
                 }
             }

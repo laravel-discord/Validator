@@ -7,7 +7,7 @@
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
 **/
 
-namespace CharlotteDunois\Validation\Rule;
+namespace CharlotteDunois\Validation\Rules;
 
 /**
  * Name: `distinct`
@@ -16,11 +16,11 @@ namespace CharlotteDunois\Validation\Rule;
  */
 class Distinct implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
-        if($exists === false) {
-            return null;
+        if(!$exists) {
+            return false;
         }
         
-        if($value == array_unique($value)) {
+        if($value !== array_unique($value)) {
             return 'formvalidator_make_distinct';
         }
         

@@ -7,7 +7,7 @@
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
 **/
 
-namespace CharlotteDunois\Validation\Rule;
+namespace CharlotteDunois\Validation\Rules;
 
 /**
  * Name: `class` - Type Rule
@@ -15,15 +15,22 @@ namespace CharlotteDunois\Validation\Rule;
  * This rule ensures a specific field is a string containing a valid class name or a class instance.
  * The options value ensures the class is either of that type, or extending it or implementing it.
  *
+ * You can ensure that only class names get passed by appending `,string_only` - or only objects by `,object_only`.
+ *
  * Usage: `class` or `class:CLASS_NAME`
  */
 class ClassRule implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
-        if($exists === false) {
-            return null;
+        if(!$exists) {
+            return false;
         }
         
         $is_string = is_string($value);
+        $is_object = is_object($value);
+        
+        if(!$is_string && !$is_object) {
+            return 'formvalidator_make_class';
+        }
         
         $options = explode(',', $options);
         $class = ltrim($options[0], '\\');
@@ -32,8 +39,8 @@ class ClassRule implements \CharlotteDunois\Validation\ValidationRule {
             return 'formvalidator_make_class_stringonly';
         }
         
-        if(!$is_string && !is_object($value)) {
-            return 'formvalidator_make_class';
+        if(!empty($options[1]) && $options[1] === 'object_only' && !$is_object) {
+            return 'formvalidator_make_class_objectonly';
         }
         
         if($is_string && !class_exists($value)) {

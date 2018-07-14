@@ -7,25 +7,33 @@
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
 **/
 
-namespace CharlotteDunois\Validation\Rule;
+namespace CharlotteDunois\Validation\Rules;
 
 /**
  * Name: `dimensions`
  *
- * This rule ensures a specific upload field contains an image with the required dimensions. The following options exist: `min_width`, `min_height`, `width`, `height`, `max_width`, `max_height`, `ratio`.
+ * This rule ensures a specific (upload) field contains an image with the required dimensions. The following options exist: `min_width`, `min_height`, `width`, `height`, `max_width`, `max_height`, `ratio`.
  * Multiple options can be used using comma separators. Usage: `dimensions:OPTION=VALUE`
  */
 class Dimensions implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
-        if($exists === false) {
-            return null;
+        if(isset($_FILES[$key])) {
+            if(!file_exists($_FILES[$key]['tmp_name'])) {
+                return 'formvalidator_make_invalid_file';
+            }
+            
+            $size = getimagesize($_FILES[$key]['tmp_name']);
+        } else {
+            if(!$exists) {
+                return false;
+            }
+            
+            $size = @getimagesizefromstring($value);
         }
         
-        if(!isset($_FILES[$key]) || !file_exists($_FILES[$key]['tmp_name'])) {
+        if(!$size) {
             return 'formvalidator_make_invalid_file';
         }
-        
-        $size = getimagesize($FILES[$key]['tmp_name']);
         
         $n = explode(',', $options);
         foreach($n as $x) {

@@ -21,6 +21,7 @@ interface ValidationRule {
      * @param mixed                                  $options     Any rule options.
      * @param bool                                   $exists      If the field exists ($value is null on false).
      * @param \CharlotteDunois\Validation\Validator  $validator   The Validator instance
+     * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
      */
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator);
 }

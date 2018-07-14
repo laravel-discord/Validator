@@ -7,7 +7,7 @@
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
 **/
 
-namespace CharlotteDunois\Validation\Rule;
+namespace CharlotteDunois\Validation\Rules;
 
 /**
  * Name: `image`
@@ -16,16 +16,21 @@ namespace CharlotteDunois\Validation\Rule;
  */
 class Image implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
-        if($exists === false) {
-            return null;
+        if(isset($_FILES[$key])) {
+            if(!file_exists($_FILES[$key]['tmp_name'])) {
+                return 'formvalidator_make_image';
+            }
+            
+            $size = getimagesize($_FILES[$key]['tmp_name']);
+        } else {
+            if(!$exists) {
+                return false;
+            }
+            
+            $size = @getimagesizefromstring($value);
         }
         
-        if(!isset($_FILES[$key]) || !file_exists($_FILES[$key]['tmp_name'])) {
-            return 'formvalidator_make_image';
-        }
-        
-        $size = getimagesize($FILES[$key]['tmp_name']);
-        if($size === false) {
+        if(!$size) {
             return 'formvalidator_make_image';
         }
         

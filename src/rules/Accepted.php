@@ -7,7 +7,7 @@
  * License: https://github.com/CharlotteDunois/Validator/blob/master/LICENSE
 **/
 
-namespace CharlotteDunois\Validation\Rule;
+namespace CharlotteDunois\Validation\Rules;
 
 /**
  * Name: `accepted`
@@ -16,11 +16,11 @@ namespace CharlotteDunois\Validation\Rule;
  */
 class Accepted implements \CharlotteDunois\Validation\ValidationRule {
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
-        if($exists === false) {
-            return null;
+        if(!$exists) {
+            return false;
         }
         
-        if(!in_array($value, array('yes', 'on', 1, true, '1', 'true'))) {
+        if(!in_array($value, array('yes', 'on', 1, true, '1', 'true'), true)) {
             return 'formvalidator_make_accepted';
         }
         
