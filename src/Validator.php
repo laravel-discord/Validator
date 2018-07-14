@@ -18,7 +18,7 @@ class Validator {
     private $fields = array();
     private $rules = array();
     
-    private $lang = NULL;
+    private $lang = null;
     private $lang_words = array();
     
     private static $rulesets = array();
@@ -118,7 +118,7 @@ class Validator {
             $set = explode('|', $rule);
             
             $exists = array_key_exists($key, $this->fields);
-            $value = ($exists ? $this->fields[$key] : NULL);
+            $value = ($exists ? $this->fields[$key] : null);
             
             $passedLang = false;
             $failedOtherRules = false;
@@ -130,10 +130,10 @@ class Validator {
                     $nullable = true;
                     continue 1;
                 } elseif(!isset(self::$rulesets[$r[0]])) {
-                   throw new \RuntimeException('Validation Rule "'.$r[0].'" does not exist');
+                    throw new \RuntimeException('Validation Rule "'.$r[0].'" does not exist');
                 }
                 
-                $return = self::$rulesets[$r[0]]->validate($value, $key, $this->fields, (array_key_exists(1, $r) ? $r[1] : NULL), $exists, $this);
+                $return = self::$rulesets[$r[0]]->validate($value, $key, $this->fields, (array_key_exists(1, $r) ? $r[1] : null), $exists, $this);
                 $passed = is_bool($return);
                 
                 if(in_array($r[0], self::$langrules)) {
@@ -188,7 +188,8 @@ class Validator {
      */
     function language($key, $replacements = array()) {
         if(empty($this->lang_words)) {
-            include(dirname(__FILE__).'/languages/'.$this->lang.'.lang.php');
+            include dirname(__FILE__).'/languages/'.$this->lang.'.lang.php';
+            
             if(!empty($l)) {
                 $this->lang_words = $l;
             }
