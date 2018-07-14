@@ -30,7 +30,7 @@ class Validator {
         $this->lang = $lang;
         
         if(empty(self::$rulesets)) {
-            $rules = glob(__DIR__.'/rules/*.php');
+            $rules = glob(__DIR__.'/Rules/*.php');
             foreach($rules as $rule) {
                 $name = basename($rule, '.php');
                 if($name === 'Nullable') {
