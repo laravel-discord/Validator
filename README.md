@@ -3,11 +3,11 @@
 This is a PHP validator for stuff.
 
 # Usage
-Include file and initialize an instance.
+Include composer's autoloader and initialize an instance.
 
 ```php
 <?php
-include_once(__DIR__.'/CharlotteDunois/Validation/Validator.php');
+// include autoloader
 
 //This one will not fail
 $nofail = CharlotteDunois\Validation\Validator::make(array('username' => 'CharlotteDunois', 'email' => 'noreply@github.com'), array('username' => 'string|required|min:5|max:75', 'email' => 'email'));
