@@ -1,4 +1,4 @@
-# Validator
+# Validator [![Build Status](https://scrutinizer-ci.com/g/CharlotteDunois/Validator/badges/build.png?b=master)](https://scrutinizer-ci.com/g/CharlotteDunois/Validator/build-status/master) [![Code Coverage](https://scrutinizer-ci.com/g/CharlotteDunois/Validator/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/CharlotteDunois/Validator/?branch=master)
 
 This is a PHP validator for stuff.
 
