@@ -10,6 +10,10 @@
 namespace CharlotteDunois\Validation;
 
 final class ValidatorTest extends \PHPUnit\Framework\TestCase {
+    function tearDown() {
+        unset($_FILES['test']);
+    }
+    
     function testThingsEmpty() {
         $fields = array();
         
@@ -423,7 +427,6 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
     }
     
     function testDimensions() {
-        unset($_FILES['test']);
         $file = file_get_contents(__DIR__.'/testfile.png');
         
         $validator = Validator::make(
@@ -455,7 +458,6 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
     }
     
     function testDimensions2() {
-        unset($_FILES['test']);
         $file = file_get_contents(__DIR__.'/testfile.png');
         
         $this->expectException(\LogicException::class);
@@ -469,7 +471,6 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
     }
     
     function testDimensions3() {
-        unset($_FILES['test']);
         $file = file_get_contents(__DIR__.'/testfile.png');
         
         $this->expectException(\LogicException::class);
@@ -483,7 +484,6 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
     }
     
     function testDimensions4() {
-        unset($_FILES['test']);
         $file = file_get_contents(__DIR__.'/testfile.png');
         
         $this->expectException(\LogicException::class);
@@ -497,7 +497,6 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
     }
     
     function testDimensions5() {
-        unset($_FILES['test']);
         $file = file_get_contents(__DIR__.'/testfile.png');
         
         $this->expectException(\LogicException::class);
@@ -511,7 +510,6 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
     }
     
     function testDimensions6() {
-        unset($_FILES['test']);
         $file = file_get_contents(__DIR__.'/testfile.png');
         
         $this->expectException(\LogicException::class);
@@ -525,7 +523,6 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
     }
     
     function testDimensions7() {
-        unset($_FILES['test']);
         $file = file_get_contents(__DIR__.'/testfile.png');
         
         $this->expectException(\LogicException::class);
@@ -539,7 +536,6 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
     }
     
     function testDimensions8() {
-        unset($_FILES['test']);
         $file = file_get_contents(__DIR__.'/testfile.png');
         
         $this->expectException(\LogicException::class);
@@ -557,7 +553,6 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
     }
     
     function testDimensions9() {
-        unset($_FILES['test']);
         
         $this->expectException(\LogicException::class);
         
@@ -682,7 +677,6 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
     }
     
     function testImage() {
-        unset($_FILES['test']);
         $file = file_get_contents(__DIR__.'/testfile.png');
         
         $validator = Validator::make(
@@ -716,7 +710,6 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
     }
     
     function testImage2() {
-        unset($_FILES['test']);
         $this->expectException(\LogicException::class);
         
         $validator4 = Validator::make(
@@ -861,7 +854,6 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
     }
     
     function testMax2() {
-        unset($_FILES['test']);
         $this->expectException(\LogicException::class);
         
         $validator = Validator::make(
@@ -873,7 +865,6 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
     }
     
     function testMimeTypes() {
-        unset($_FILES['test']);
         
         $file = file_get_contents(__DIR__.'/testfile.png');
         
@@ -910,7 +901,6 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
     }
     
     function testMimeTypes2() {
-        unset($_FILES['test']);
         $file = file_get_contents(__DIR__.'/testfile.png');
         
         $this->expectException(\LogicException::class);
@@ -967,7 +957,6 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
     }
     
     function testMin2() {
-        unset($_FILES['test']);
         $this->expectException(\LogicException::class);
         
         $validator = Validator::make(
