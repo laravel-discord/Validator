@@ -1191,13 +1191,19 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
     function testFailNullableRule() {
         $validator = Validator::make(array('test' => null), array('test' => 'string'));
         
-        $this->assertEquals(false, $validator->passes());
+        $this->assertFalse($validator->passes());
     }
     
     function testFailNullableRule2() {
         $validator = Validator::make(array('test' => null), array('test' => 'between:0,1'));
         
-        $this->assertEquals(false, $validator->passes());
+        $this->assertFalse($validator->passes());
+    }
+    
+    function testFailNullableRule3() {
+        $validator = Validator::make(array('test' => 5), array('test' => 'nullable|between:0,1'));
+        
+        $this->assertFalse($validator->passes());
     }
     
     function testInvalidRule() {
@@ -1209,8 +1215,8 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
     function testLanguageFun() {
         $validator = Validator::make(array(), array());
         
-        $this->assertEquals('test', $validator->language('test'));
-        $this->assertEquals('Is smaller / before than 1', $validator->language('formvalidator_make_before', array('{0}' => '1')));
-        $this->assertEquals(array(), $validator->errors());
+        $this->assertSame('test', $validator->language('test'));
+        $this->assertSame('Is smaller / before than 1', $validator->language('formvalidator_make_before', array('{0}' => '1')));
+        $this->assertSame(array(), $validator->errors());
     }
 }
