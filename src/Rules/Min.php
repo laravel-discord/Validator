@@ -19,6 +19,7 @@ namespace CharlotteDunois\Validation\Rules;
  *   - string: equal/more characters than specified value
  *
  * Usage: `min:VALUE`
+ * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
  */
 class Min implements \CharlotteDunois\Validation\ValidationRule {
     /**

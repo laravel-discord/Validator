@@ -24,6 +24,12 @@ class Validator {
     private static $rulesets = array();
     private static $langrules = array();
     
+    /**
+     * Constructor
+     * @param  array   $fields
+     * @param  array   $rules
+     * @param  string  $lang
+     */
     private function __construct(array $fields, array $rules, string $lang) {
         $this->fields = $fields;
         $this->rules = $rules;
@@ -45,9 +51,9 @@ class Validator {
     
     /**
      * Create a new Validator instance.
-     * @param  array    $fields   The fields you wanna run the validation against.
-     * @param  array    $rules    The validation rules.
-     * @param  string   $lang     The language for error messages (included are 'en' or 'de').
+     * @param  array   $fields   The fields you wanna run the validation against.
+     * @param  array   $rules    The validation rules.
+     * @param  string  $lang     The language for error messages (included are 'en' or 'de').
      * @return Validator
      */
     static function make(array $fields, array $rules, string $lang = 'en') {
@@ -57,6 +63,7 @@ class Validator {
     /**
      * Adds a new rule.
      * @param \CharlotteDunois\Validation\ValidationRule  $rule
+     * @return void
      * @throws \InvalidArgumentException
      */
     static function addRule(\CharlotteDunois\Validation\ValidationRule $rule) {
@@ -109,6 +116,7 @@ class Validator {
     }
     
     /**
+     * @return bool
      * @throws \RuntimeException
      */
     private function startValidation(string $throws = '') {
@@ -188,7 +196,8 @@ class Validator {
      */
     function language($key, $replacements = array()) {
         if(empty($this->lang_words)) {
-            include dirname(__FILE__).'/languages/'.$this->lang.'.lang.php';
+            $filename = dirname(__FILE__).'/languages/'.$this->lang.'.lang.php';
+            include $filename;
             
             if(!empty($l)) {
                 $this->lang_words = $l;
