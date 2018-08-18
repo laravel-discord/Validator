@@ -4,7 +4,7 @@
     "description": "PHP Validator for stuff.",
     "keywords": [ "validation" ],
     "homepage": "https://github.com/CharlotteDunois/Validator",
-    "license": "MIT",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Charlotte Dunois",
