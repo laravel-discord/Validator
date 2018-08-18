@@ -19,11 +19,11 @@ namespace CharlotteDunois\Validation\Rules;
  *   - string: equal/more characters than specified value
  *
  * Usage: `min:VALUE`
- * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
  */
 class Min implements \CharlotteDunois\Validation\ValidationRule {
     /**
      * {@inheritdoc}
+     * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
      */
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if(isset($_FILES[$key]) && file_exists($_FILES[$key]['tmp_name']) && $_FILES[$key]['error'] == 0) {
