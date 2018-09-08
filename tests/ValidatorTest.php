@@ -172,6 +172,10 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
         );
         
         $this->assertTrue($validator3->throw('\\LogicException'));
+    }
+    
+    function testArray2() {
+        $this->expectException(\LogicException::class);
         
         $validator4 = Validator::make(
             array('test' => array(5.2)),
