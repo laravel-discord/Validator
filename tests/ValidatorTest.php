@@ -14,6 +14,33 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
         unset($_FILES['test']);
     }
     
+    function testAddRule() {
+        $class = (new class() implements \CharlotteDunois\Validation\ValidationRule {
+            function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
+                if($value === true) {
+                    return true;
+                }
+                
+                return 'Given value is not boolean true';
+            }
+        });
+        
+        $arrname = explode('\\', get_class($class));
+        $name = \strtolower(array_pop($arrname));
+        
+        \CharlotteDunois\Validation\Validator::addRule($class);
+        
+        $validator = \CharlotteDunois\Validation\Validator::make(array(
+            'true-val' => true,
+            'other' => 'helloworld'
+        ), array(
+            'true-val' => $name,
+            'other' => 'string'
+        ));
+        
+        $this->assertTrue($validator->passes());
+    }
+    
     function testThingsEmpty() {
         $fields = array();
         
@@ -47,7 +74,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'accepted')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -56,7 +83,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'accepted')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testActiveURL() {
@@ -65,7 +92,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'activeurl')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -74,7 +101,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'activeurl')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testAfter() {
@@ -83,7 +110,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'after:2010-01-01')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -92,7 +119,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'after:2010-01-01')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testAlpha() {
@@ -101,7 +128,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'alpha')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -110,7 +137,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'alpha')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testAlpaDash() {
@@ -119,7 +146,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'alphadash')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -128,7 +155,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'alphadash')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testAlphaNum() {
@@ -137,7 +164,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'alphanum')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -146,7 +173,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'alphanum')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testArray() {
@@ -155,14 +182,14 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'array')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $validator2 = Validator::make(
             array('test' => array('hi')),
             array('test' => 'array:string')
         );
         
-        $this->assertTrue($validator2->throw('\\LogicException'));
+        $this->assertTrue($validator2->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -171,7 +198,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'array')
         );
         
-        $this->assertTrue($validator3->throw('\\LogicException'));
+        $this->assertTrue($validator3->throw(\LogicException::class));
     }
     
     function testArray2() {
@@ -182,7 +209,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'array:bool')
         );
         
-        $this->assertFalse($validator4->throw('\\LogicException'));
+        $this->assertFalse($validator4->throw(\LogicException::class));
     }
     
     function testBefore() {
@@ -191,7 +218,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'before:2010-01-01')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -200,7 +227,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'before:2010-01-01')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testBetween() {
@@ -209,7 +236,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'between:0,2')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -218,7 +245,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'between:0,2')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testBoolean() {
@@ -227,7 +254,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'boolean')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -236,7 +263,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'boolean')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testCallable() {
@@ -245,7 +272,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'callable')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -254,7 +281,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'callable')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testClass() {
@@ -263,28 +290,28 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'class:\\stdClass')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $validator2 = Validator::make(
             array('test' => (new \stdClass())),
             array('test' => 'class:\\stdClass')
         );
         
-        $this->assertTrue($validator2->throw('\\LogicException'));
+        $this->assertTrue($validator2->throw(\LogicException::class));
         
         $validator3 = Validator::make(
             array('test' => (new \stdClass())),
             array('test' => 'class:\\stdClass,object_only')
         );
         
-        $this->assertTrue($validator3->throw('\\LogicException'));
+        $this->assertTrue($validator3->throw(\LogicException::class));
         
         $validator4 = Validator::make(
             array('test' => '\\stdClass'),
             array('test' => 'class:\\stdClass,string_only')
         );
         
-        $this->assertTrue($validator4->throw('\\LogicException'));
+        $this->assertTrue($validator4->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -293,7 +320,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'class:\\stdClass')
         );
         
-        $this->assertFalse($validator5->throw('\\LogicException'));
+        $this->assertFalse($validator5->throw(\LogicException::class));
     }
     
     function testClass2() {
@@ -304,7 +331,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'class:\\ArrayObject')
         );
         
-        $this->assertFalse($validator->throw('\\LogicException'));
+        $this->assertFalse($validator->throw(\LogicException::class));
     }
     
     function testClass3() {
@@ -315,7 +342,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'class:\\stdClass,string_only')
         );
         
-        $this->assertFalse($validator->throw('\\LogicException'));
+        $this->assertFalse($validator->throw(\LogicException::class));
     }
     
     function testClass4() {
@@ -326,7 +353,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'class:\\stdClass,object_only')
         );
         
-        $this->assertFalse($validator->throw('\\LogicException'));
+        $this->assertFalse($validator->throw(\LogicException::class));
     }
     
     function testClass5() {
@@ -337,7 +364,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'class:\\stdClass')
         );
         
-        $this->assertFalse($validator->throw('\\LogicException'));
+        $this->assertFalse($validator->throw(\LogicException::class));
     }
     
     function testConfirmed() {
@@ -346,7 +373,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'confirmed')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -355,7 +382,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'confirmed')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testDate() {
@@ -364,7 +391,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'date')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -373,7 +400,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'date')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testDateFormat() {
@@ -382,7 +409,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'dateformat:d.m.Y')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -391,7 +418,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'dateformat:d.m.Y')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testDifferent() {
@@ -400,7 +427,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'different:test2')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -409,7 +436,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'different:test2')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testDigits() {
@@ -418,7 +445,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'digits:3')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -427,7 +454,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'digits:3')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testDimensions() {
@@ -438,7 +465,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'dimensions:min_width=10,min_height=10,width=32,height=32,max_width=40,max_height=40,ratio=1')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $_FILES['test'] = array('tmp_name' => __DIR__.'/testfile.png', 'error' => 0);
         
@@ -447,7 +474,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'dimensions:ratio=1/1')
         );
         
-        $this->assertTrue($validator2->throw('\\LogicException'));
+        $this->assertTrue($validator2->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -458,7 +485,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'dimensions:min_width=40')
         );
         
-        $this->assertFalse($validator->throw('\\LogicException'));
+        $this->assertFalse($validator->throw(\LogicException::class));
     }
     
     function testDimensions2() {
@@ -471,7 +498,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'dimensions:min_height=40')
         );
         
-        $this->assertFalse($validator->throw('\\LogicException'));
+        $this->assertFalse($validator->throw(\LogicException::class));
     }
     
     function testDimensions3() {
@@ -484,7 +511,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'dimensions:width=40')
         );
         
-        $this->assertFalse($validator->throw('\\LogicException'));
+        $this->assertFalse($validator->throw(\LogicException::class));
     }
     
     function testDimensions4() {
@@ -497,7 +524,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'dimensions:height=40')
         );
         
-        $this->assertFalse($validator->throw('\\LogicException'));
+        $this->assertFalse($validator->throw(\LogicException::class));
     }
     
     function testDimensions5() {
@@ -510,7 +537,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'dimensions:max_width=10')
         );
         
-        $this->assertFalse($validator->throw('\\LogicException'));
+        $this->assertFalse($validator->throw(\LogicException::class));
     }
     
     function testDimensions6() {
@@ -523,7 +550,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'dimensions:max_height=10')
         );
         
-        $this->assertFalse($validator->throw('\\LogicException'));
+        $this->assertFalse($validator->throw(\LogicException::class));
     }
     
     function testDimensions7() {
@@ -536,7 +563,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'dimensions:ratio=0.5')
         );
         
-        $this->assertFalse($validator->throw('\\LogicException'));
+        $this->assertFalse($validator->throw(\LogicException::class));
     }
     
     function testDimensions8() {
@@ -551,7 +578,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'dimensions:ratio=0.5')
         );
         
-        $this->assertFalse($validator->throw('\\LogicException'));
+        $this->assertFalse($validator->throw(\LogicException::class));
         
         unset($_FILES['test']);
     }
@@ -565,7 +592,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'dimensions:')
         );
         
-        $this->assertFalse($validator->throw('\\LogicException'));
+        $this->assertFalse($validator->throw(\LogicException::class));
     }
     
     function testDistinct() {
@@ -574,7 +601,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'distinct')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -583,7 +610,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'distinct')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testEmail() {
@@ -592,7 +619,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'email')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -601,7 +628,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'email')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testFile() {
@@ -612,7 +639,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'file')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -623,7 +650,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'file')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testFilled() {
@@ -632,7 +659,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'filled')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -641,7 +668,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'filled')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testFloat() {
@@ -650,7 +677,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'float')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -659,7 +686,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'float')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testFunction() {
@@ -668,7 +695,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'function')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -677,7 +704,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'function')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testImage() {
@@ -688,7 +715,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'image')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $_FILES['test'] = array('tmp_name' => __DIR__.'/testfile.png', 'error' => 0);
         
@@ -697,7 +724,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'image')
         );
         
-        $this->assertTrue($validator2->throw('\\LogicException'));
+        $this->assertTrue($validator2->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -708,7 +735,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'image')
         );
         
-        $this->assertFalse($validator3->throw('\\LogicException'));
+        $this->assertFalse($validator3->throw(\LogicException::class));
         
         unset($_FILES['test']);
     }
@@ -721,7 +748,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'image')
         );
         
-        $this->assertFalse($validator4->throw('\\LogicException'));
+        $this->assertFalse($validator4->throw(\LogicException::class));
     }
     
     function testIn() {
@@ -730,7 +757,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'in:5,4')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -739,7 +766,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'in:5,4')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testInteger() {
@@ -748,7 +775,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'integer')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -757,7 +784,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'integer')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testIP() {
@@ -766,7 +793,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'ip')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -775,7 +802,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'ip')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testJSON() {
@@ -784,7 +811,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'json')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -793,7 +820,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'json')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testLowercase() {
@@ -802,7 +829,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'lowercase')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -811,7 +838,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'lowercase')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testMax() {
@@ -822,7 +849,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'max:6')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         unset($_FILES['test']);
         
@@ -831,21 +858,21 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'max:6')
         );
         
-        $this->assertTrue($validator2->throw('\\LogicException'));
+        $this->assertTrue($validator2->throw(\LogicException::class));
         
         $validator3 = Validator::make(
             array('test' => 5),
             array('test' => 'max:6')
         );
         
-        $this->assertTrue($validator3->throw('\\LogicException'));
+        $this->assertTrue($validator3->throw(\LogicException::class));
         
         $validator4 = Validator::make(
             array('test' => 'abcd'),
             array('test' => 'max:6')
         );
         
-        $this->assertTrue($validator4->throw('\\LogicException'));
+        $this->assertTrue($validator4->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -854,7 +881,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'max:4')
         );
         
-        $this->assertFalse($validator5->throw('\\LogicException'));
+        $this->assertFalse($validator5->throw(\LogicException::class));
     }
     
     function testMax2() {
@@ -865,7 +892,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'max:4')
         );
         
-        $this->assertFalse($validator->throw('\\LogicException'));
+        $this->assertFalse($validator->throw(\LogicException::class));
     }
     
     function testMimeTypes() {
@@ -877,7 +904,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'mimetypes:image/*')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $_FILES['test'] = array('tmp_name' => __DIR__.'/testfile.png', 'error' => 0);
         
@@ -886,7 +913,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'mimetypes:*/*')
         );
         
-        $this->assertTrue($validator2->throw('\\LogicException'));
+        $this->assertTrue($validator2->throw(\LogicException::class));
         
         unset($_FILES['test']);
         
@@ -899,7 +926,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'mimetypes:')
         );
         
-        $this->assertFalse($validator3->throw('\\LogicException'));
+        $this->assertFalse($validator3->throw(\LogicException::class));
         
         unset($_FILES['test']);
     }
@@ -914,7 +941,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'mimetypes:')
         );
         
-        $this->assertFalse($validator4->throw('\\LogicException'));
+        $this->assertFalse($validator4->throw(\LogicException::class));
     }
     
     function testMin() {
@@ -925,7 +952,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'min:1')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         unset($_FILES['test']);
         
@@ -934,21 +961,21 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'min:1')
         );
         
-        $this->assertTrue($validator2->throw('\\LogicException'));
+        $this->assertTrue($validator2->throw(\LogicException::class));
         
         $validator3 = Validator::make(
             array('test' => 5),
             array('test' => 'min:1')
         );
         
-        $this->assertTrue($validator3->throw('\\LogicException'));
+        $this->assertTrue($validator3->throw(\LogicException::class));
         
         $validator4 = Validator::make(
             array('test' => 'abcd'),
             array('test' => 'min:1')
         );
         
-        $this->assertTrue($validator4->throw('\\LogicException'));
+        $this->assertTrue($validator4->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -957,7 +984,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'min:6')
         );
         
-        $this->assertFalse($validator5->throw('\\LogicException'));
+        $this->assertFalse($validator5->throw(\LogicException::class));
     }
     
     function testMin2() {
@@ -968,7 +995,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'min:4')
         );
         
-        $this->assertFalse($validator->throw('\\LogicException'));
+        $this->assertFalse($validator->throw(\LogicException::class));
     }
     
     function testNoWhitespace() {
@@ -977,7 +1004,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'nowhitespace')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -986,7 +1013,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'nowhitespace')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testNullable() {
@@ -995,14 +1022,14 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'nullable')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $validator2 = Validator::make(
             array('test' => null),
             array('test' => 'nullable|numeric')
         );
         
-        $this->assertTrue($validator2->throw('\\LogicException'));
+        $this->assertTrue($validator2->throw(\LogicException::class));
     }
     
     function testNumeric() {
@@ -1011,7 +1038,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'numeric')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -1020,7 +1047,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'numeric')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testPresent() {
@@ -1029,7 +1056,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'present')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -1038,7 +1065,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'present')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testRegex() {
@@ -1047,7 +1074,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'regex:/\\d+/')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -1056,7 +1083,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'regex:/\\d+/')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testRequired() {
@@ -1065,7 +1092,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'required')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -1074,7 +1101,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'required')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testSame() {
@@ -1083,7 +1110,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'same:test2')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -1092,7 +1119,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'same:test2')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testSize() {
@@ -1103,7 +1130,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'size:2')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         unset($_FILES['test']);
         
@@ -1112,21 +1139,21 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'size:5')
         );
         
-        $this->assertTrue($validator2->throw('\\LogicException'));
+        $this->assertTrue($validator2->throw(\LogicException::class));
         
         $validator3 = Validator::make(
             array('test' => 5),
             array('test' => 'size:5')
         );
         
-        $this->assertTrue($validator3->throw('\\LogicException'));
+        $this->assertTrue($validator3->throw(\LogicException::class));
         
         $validator4 = Validator::make(
             array('test' => 'hello'),
             array('test' => 'size:5')
         );
         
-        $this->assertTrue($validator4->throw('\\LogicException'));
+        $this->assertTrue($validator4->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -1135,7 +1162,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'size:5')
         );
         
-        $this->assertFalse($validator5->throw('\\LogicException'));
+        $this->assertFalse($validator5->throw(\LogicException::class));
     }
     
     function testString() {
@@ -1144,7 +1171,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'string')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -1153,7 +1180,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'string')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testUppercase() {
@@ -1162,7 +1189,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'uppercase')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -1171,7 +1198,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'uppercase')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testURL() {
@@ -1180,7 +1207,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'url')
         );
         
-        $this->assertTrue($validator->throw('\\LogicException'));
+        $this->assertTrue($validator->throw(\LogicException::class));
         
         $this->expectException(\LogicException::class);
         
@@ -1189,7 +1216,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             array('test' => 'url')
         );
         
-        $this->assertFalse($validator2->throw('\\LogicException'));
+        $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
     function testFailNullableRule() {

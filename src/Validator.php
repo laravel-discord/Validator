@@ -14,15 +14,15 @@ namespace CharlotteDunois\Validation;
  * Type Rules are non-exclusive (that means specifying two type rules means either one is passing).
  */
 class Validator {
-    private $errors = array();
-    private $fields = array();
-    private $rules = array();
+    protected $errors = array();
+    protected $fields = array();
+    protected $rules = array();
     
-    private $lang = null;
-    private $lang_words = array();
+    protected $lang = null;
+    protected $lang_words = array();
     
-    private static $rulesets = array();
-    private static $langrules = array();
+    protected static $rulesets = null;
+    protected static $langrules = array();
     
     /**
      * Constructor
@@ -30,22 +30,13 @@ class Validator {
      * @param  array   $rules
      * @param  string  $lang
      */
-    private function __construct(array $fields, array $rules, string $lang) {
+    protected function __construct(array $fields, array $rules, string $lang) {
         $this->fields = $fields;
         $this->rules = $rules;
         $this->lang = $lang;
         
-        if(empty(self::$rulesets)) {
-            $rules = glob(__DIR__.'/Rules/*.php');
-            foreach($rules as $rule) {
-                $name = basename($rule, '.php');
-                if($name === 'Nullable') {
-                    continue;
-                }
-                
-                $class = '\\CharlotteDunois\\Validation\\Rules\\'.$name;
-                static::addRule((new $class()));
-            }
+        if(self::$rulesets === null) {
+            static::initRules();
         }
     }
     
@@ -67,6 +58,10 @@ class Validator {
      * @throws \InvalidArgumentException
      */
     static function addRule(\CharlotteDunois\Validation\ValidationRule $rule) {
+        if(self::$rulesets === null) {
+            static::initRules();
+        }
+        
         $class = get_class($rule);
         $arrname = explode('\\', $class);
         $name = array_pop($arrname);
@@ -119,7 +114,7 @@ class Validator {
      * @return bool
      * @throws \RuntimeException
      */
-    private function startValidation(string $throws = '') {
+    protected function startValidation(string $throws = '') {
         $vThrows = !empty($throws);
         
         foreach($this->rules as $key => $rule) {
@@ -217,5 +212,20 @@ class Validator {
         }
         
         return $key;
+    }
+    
+    protected static function initRules() {
+        self::$rulesets = array();
+        
+        $rules = glob(__DIR__.'/Rules/*.php');
+        foreach($rules as $rule) {
+            $name = basename($rule, '.php');
+            if($name === 'Nullable') {
+                continue;
+            }
+            
+            $class = '\\CharlotteDunois\\Validation\\Rules\\'.$name;
+            static::addRule((new $class()));
+        }
     }
 }
