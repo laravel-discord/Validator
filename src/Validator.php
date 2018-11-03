@@ -18,10 +18,16 @@ class Validator {
     protected $fields = array();
     protected $rules = array();
     
+    /** @var string */
     protected $lang = null;
-    protected $lang_words = array();
     
+    /** @var \CharlotteDunois\Validation\LanguageInterface[] */
+    protected static $languages = array();
+    
+    /** @var \CharlotteDunois\Validation\ValidationRule[] */
     protected static $rulesets = null;
+    
+    /** @var \CharlotteDunois\Validation\ValidationRule[] */
     protected static $langrules = array();
     
     /**
@@ -35,7 +41,7 @@ class Validator {
         $this->rules = $rules;
         $this->lang = $lang;
         
-        if(self::$rulesets === null) {
+        if(static::$rulesets === null) {
             static::initRules();
         }
     }
@@ -58,7 +64,7 @@ class Validator {
      * @throws \InvalidArgumentException
      */
     static function addRule(\CharlotteDunois\Validation\ValidationRule $rule) {
-        if(self::$rulesets === null) {
+        if(static::$rulesets === null) {
             static::initRules();
         }
         
@@ -67,11 +73,26 @@ class Validator {
         $name = array_pop($arrname);
         
         $rname = str_replace('rule', '', mb_strtolower($name));
-        self::$rulesets[$rname] = $rule;
+        static::$rulesets[$rname] = $rule;
         
         if(mb_stripos($name, 'rule') !== false) {
-            self::$langrules[] = $rname;
+            static::$langrules[] = $rname;
         }
+    }
+    
+    /**
+     * Adds a language to the languages array and makes it usable by the Validator.
+     * @param string                                         $langCode
+     * @param \CharlotteDunois\Validation\LanguageInterface  $language
+     * @return void
+     * @throws \InvalidArgumentException
+     */
+    static function addLanguage(string $langCode, \CharlotteDunois\Validation\LanguageInterface $language) {
+        if(isset(static::$languages[$langCode])) {
+            throw new \InvalidArgumentException('Given language code is already in use');
+        }
+        
+        static::$languages[$langCode] = $language;
     }
     
     /**
@@ -132,14 +153,14 @@ class Validator {
                 if($r[0] === 'nullable') {
                     $nullable = true;
                     continue 1;
-                } elseif(!isset(self::$rulesets[$r[0]])) {
+                } elseif(!isset(static::$rulesets[$r[0]])) {
                     throw new \RuntimeException('Validation Rule "'.$r[0].'" does not exist');
                 }
                 
-                $return = self::$rulesets[$r[0]]->validate($value, $key, $this->fields, (array_key_exists(1, $r) ? $r[1] : null), $exists, $this);
+                $return = static::$rulesets[$r[0]]->validate($value, $key, $this->fields, (array_key_exists(1, $r) ? $r[1] : null), $exists, $this);
                 $passed = is_bool($return);
                 
-                if(in_array($r[0], self::$langrules)) {
+                if(in_array($r[0], static::$langrules)) {
                     if($passed) {
                         $passedLang = true;
                     } else {
@@ -189,33 +210,15 @@ class Validator {
      * @param  array   $replacements
      * @return string
      */
-    function language($key, $replacements = array()) {
-        if(empty($this->lang_words)) {
-            $filename = dirname(__FILE__).'/languages/'.$this->lang.'.lang.php';
-            include $filename;
-            
-            if(!empty($l)) {
-                $this->lang_words = $l;
-            }
-        }
-        
-        if(isset($this->lang_words[$key])) {
-            $lang = $this->lang_words[$key];
-            
-            if(!empty($replacements)) {
-                foreach($replacements as $key => $val) {
-                    $lang = str_replace($key, $val, $lang);
-                }
-            }
-            
-            return $lang;
-        }
-        
-        return $key;
+    function language(string $key, array $replacements = array()) {
+        return static::$languages[$this->lang]->getTranslation($key, $replacements);
     }
     
     protected static function initRules() {
-        self::$rulesets = array();
+        static::$languages['en'] = new \CharlotteDunois\Validation\Languages\EnglishLanguage();
+        static::$languages['de'] = new \CharlotteDunois\Validation\Languages\GermanLanguage();
+        
+        static::$rulesets = array();
         
         $rules = glob(__DIR__.'/Rules/*.php');
         foreach($rules as $rule) {

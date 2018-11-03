@@ -38,6 +38,57 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             'other' => 'string'
         ));
         
+        $this->assertTrue($validator->throw(\LogicException::class));
+    }
+    
+    function testAddLanguage() {
+        $lang = (new class() implements \CharlotteDunois\Validation\LanguageInterface {
+            function getTranslation(string $key, array $replacements = array()) {
+                return 'ok';
+            }
+        });
+        
+        \CharlotteDunois\Validation\Validator::addLanguage('ok', $lang);
+        
+        $validator = \CharlotteDunois\Validation\Validator::make(array(
+            'other' => 5
+        ), array(
+            'other' => 'string'
+        ), 'ok');
+        
+        $this->assertFalse($validator->passes());
+        $this->assertSame(array('other' => 'ok'), $validator->errors());
+    }
+    
+    function testAddLanguageFail() {
+        $lang = (new class() implements \CharlotteDunois\Validation\LanguageInterface {
+            function getTranslation(string $key, array $replacements = array()) {
+                return 'ok';
+            }
+        });
+        
+        $this->expectException(\InvalidArgumentException::class);
+        \CharlotteDunois\Validation\Validator::addLanguage('ok', $lang);
+    }
+    
+    function testValidatorConstructorNoRules() {
+        $fields = array(
+            'other' => 'hi'
+        );
+        
+        $rules = array(
+            'other' => 'string'
+        );
+        
+        $validator = (new class($fields, $rules, 'en') extends Validator {
+            function __construct(array $fields, array $rules, string $lang) {
+                static::$rulesets = null;
+                static::$langrules = array();
+                
+                parent::__construct($fields, $rules, $lang);
+            }
+        });
+        
         $this->assertTrue($validator->passes());
     }
     
