@@ -15,33 +15,33 @@ namespace CharlotteDunois\Validation\Rules;
  * This rule ensures a specific (upload) field contains an image with the required dimensions. The following options exist: `min_width`, `min_height`, `width`, `height`, `max_width`, `max_height`, `ratio`.
  * Multiple options can be used using comma separators. Usage: `dimensions:OPTION=VALUE`
  */
-class Dimensions implements \CharlotteDunois\Validation\ValidationRule {
+class Dimensions implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
      */
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if(isset($_FILES[$key])) {
-            if(!file_exists($_FILES[$key]['tmp_name'])) {
+            if(!\file_exists($_FILES[$key]['tmp_name'])) {
                 return 'formvalidator_make_invalid_file';
             }
             
-            $size = getimagesize($_FILES[$key]['tmp_name']);
+            $size = \getimagesize($_FILES[$key]['tmp_name']);
         } else {
             if(!$exists) {
                 return false;
             }
             
-            $size = @getimagesizefromstring($value);
+            $size = @\getimagesizefromstring($value);
         }
         
         if(!$size) {
             return 'formvalidator_make_invalid_file';
         }
         
-        $n = explode(',', $options);
+        $n = \explode(',', $options);
         foreach($n as $x) {
-            $k = explode('=', $x);
+            $k = \explode('=', $x);
             switch($k[0]) {
                 case 'min_width': // @codeCoverageIgnore
                     if($k[1] > $size[0]) {
@@ -74,12 +74,12 @@ class Dimensions implements \CharlotteDunois\Validation\ValidationRule {
                     }
                 break;
                 case 'ratio': // @codeCoverageIgnore
-                    if(mb_strpos($k[1], '/') !== false) {
-                        $k[1] = explode('/', $k[1]);
+                    if(\mb_strpos($k[1], '/') !== false) {
+                        $k[1] = \explode('/', $k[1]);
                         $k[1] = $k[1][0] / $k[1][1];
                     }
                     
-                    if(number_format(($size[0] / $size[1]), 1) != number_format($k[1], 1)) {
+                    if(\number_format(($size[0] / $size[1]), 1) != \number_format($k[1], 1)) {
                         return array('formvalidator_make_ratio', array('{0}' => $options));
                     }
                 break;

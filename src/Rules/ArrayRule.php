@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is an array, or an array with only the specified type. Usage: `array` or `array:TYPE`
  */
-class ArrayRule implements \CharlotteDunois\Validation\ValidationRule {
+class ArrayRule implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,14 +24,14 @@ class ArrayRule implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if(!is_array($value)) {
+        if(!\is_array($value)) {
             return 'formvalidator_make_array';
         }
         
         if(!empty($options)) {
             foreach($value as $val) {
-                $type = gettype($val);
-                if($type == 'double') {
+                $type = \gettype($val);
+                if($type === 'double') {
                     $type = 'float'; // @codeCoverageIgnore
                 }
                 

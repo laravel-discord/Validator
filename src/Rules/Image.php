@@ -14,24 +14,24 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific upload field is an image. Usage: `image:FIELD_NAME`
  */
-class Image implements \CharlotteDunois\Validation\ValidationRule {
+class Image implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
      */
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if(isset($_FILES[$key])) {
-            if(!file_exists($_FILES[$key]['tmp_name'])) {
+            if(!\file_exists($_FILES[$key]['tmp_name'])) {
                 return 'formvalidator_make_image';
             }
             
-            $size = getimagesize($_FILES[$key]['tmp_name']);
+            $size = \getimagesize($_FILES[$key]['tmp_name']);
         } else {
             if(!$exists) {
                 return false;
             }
             
-            $size = @getimagesizefromstring($value);
+            $size = @\getimagesizefromstring($value);
         }
         
         if(!$size) {

@@ -20,30 +20,30 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * Usage: `min:VALUE`
  */
-class Min implements \CharlotteDunois\Validation\ValidationRule {
+class Min implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
      */
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
-        if(isset($_FILES[$key]) && file_exists($_FILES[$key]['tmp_name']) && $_FILES[$key]['error'] == 0) {
-            $v = round((filesize($_FILES[$key]['tmp_name']) / 1024));
+        if(isset($_FILES[$key]) && \file_exists($_FILES[$key]['tmp_name']) && $_FILES[$key]['error'] == 0) {
+            $v = \round((\filesize($_FILES[$key]['tmp_name']) / 1024));
         } else {
             if(!$exists) {
                 return false;
             }
             
-            if(is_array($value)) {
-                $v = count($value);
-            } elseif(is_numeric($value)) {
+            if(\is_array($value)) {
+                $v = \count($value);
+            } elseif(\is_numeric($value)) {
                 $v = $value;
             } else {
-                $v = mb_strlen($value);
+                $v = \mb_strlen($value);
             }
         }
         
         if($v < $options) {
-            if(is_string($value)) {
+            if(\is_string($value)) {
                 return array('formvalidator_make_min_string', array('{0}' => $options));
             } else {
                 return array('formvalidator_make_min', array('{0}' => $options));

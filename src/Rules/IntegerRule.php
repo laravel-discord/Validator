@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is of type integer.
  */
-class IntegerRule implements \CharlotteDunois\Validation\ValidationRule {
+class IntegerRule implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,7 +24,7 @@ class IntegerRule implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if(!is_int($value)) {
+        if(!\is_int($value)) {
             return 'formvalidator_make_integer';
         }
         

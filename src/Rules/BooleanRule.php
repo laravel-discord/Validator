@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is of type boolean.
  */
-class BooleanRule implements \CharlotteDunois\Validation\ValidationRule {
+class BooleanRule implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,7 +24,7 @@ class BooleanRule implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if(!is_bool($value)) {
+        if(!\is_bool($value)) {
             return 'formvalidator_make_boolean';
         }
         

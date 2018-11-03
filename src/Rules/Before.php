@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is a time before the specified value. Usage: `before:VALUE`
  */
-class Before implements \CharlotteDunois\Validation\ValidationRule {
+class Before implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,7 +24,7 @@ class Before implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if(strtotime($options) < strtotime($value)) {
+        if(\strtotime($options) < \strtotime($value)) {
             return array('formvalidator_make_before', array('{0}' => $options));
         }
         

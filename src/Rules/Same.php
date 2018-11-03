@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is the same as another existing field. Usage: `same:FIELD_NAME`
  */
-class Same implements \CharlotteDunois\Validation\ValidationRule {
+class Same implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.

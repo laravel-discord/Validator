@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is a valid JSON string.
  */
-class JSON implements \CharlotteDunois\Validation\ValidationRule {
+class JSON implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,8 +24,8 @@ class JSON implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        json_decode($value);
-        if(json_last_error() !== JSON_ERROR_NONE) {
+        \json_decode($value);
+        if(\json_last_error() !== JSON_ERROR_NONE) {
             return 'formvalidator_make_json';
         }
         

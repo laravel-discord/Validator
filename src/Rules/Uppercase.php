@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is all uppercase.
  */
-class Uppercase implements \CharlotteDunois\Validation\ValidationRule {
+class Uppercase implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,7 +24,7 @@ class Uppercase implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if(!is_string($value) || mb_strtoupper($value) !== $value) {
+        if(!\is_string($value) || \mb_strtoupper($value) !== $value) {
             return 'formvalidator_make_uppercase';
         }
         

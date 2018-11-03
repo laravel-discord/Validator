@@ -91,7 +91,7 @@ class EnglishLanguage implements \CharlotteDunois\Validation\LanguageInterface {
             
             if(!empty($replacements)) {
                 foreach($replacements as $key => $val) {
-                    $lang = str_replace($key, $val, $lang);
+                    $lang = \str_replace($key, $val, $lang);
                 }
             }
             

@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field contains only alpha characters.
  */
-class Alpha implements \CharlotteDunois\Validation\ValidationRule {
+class Alpha implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,7 +24,7 @@ class Alpha implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if(!is_string($value) || !ctype_alpha($value)) {
+        if(!\is_string($value) || !\ctype_alpha($value)) {
             return 'formvalidator_make_alpha';
         }
         

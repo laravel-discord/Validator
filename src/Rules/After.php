@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is a time after the specified time. Usage: `after:VALUE`
  */
-class After implements \CharlotteDunois\Validation\ValidationRule {
+class After implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,7 +24,7 @@ class After implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if(!is_string($value) || strtotime($options) > strtotime($value)) {
+        if(!\is_string($value) || \strtotime($options) > \strtotime($value)) {
             return array('formvalidator_make_after', array('{0}' => $options));
         }
         

@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is a numeric value (string) with the specified length. Usage: `digits:LENGTH`
  */
-class Digits implements \CharlotteDunois\Validation\ValidationRule {
+class Digits implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,7 +24,7 @@ class Digits implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if(!is_numeric($value) || mb_strlen(((string) $value)) != $options) {
+        if(!\is_numeric($value) || \mb_strlen(((string) $value)) != $options) {
             return array('formvalidator_make_digits', array('{0}' => $options));
         }
         

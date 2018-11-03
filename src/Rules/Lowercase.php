@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is all lowercase.
  */
-class Lowercase implements \CharlotteDunois\Validation\ValidationRule {
+class Lowercase implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,7 +24,7 @@ class Lowercase implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if(!is_string($value) || mb_strtolower($value) !== $value) {
+        if(!\is_string($value) || \mb_strtolower($value) !== $value) {
             return 'formvalidator_make_lowercase';
         }
         

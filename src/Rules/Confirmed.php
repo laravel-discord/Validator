@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is confirmed (the fields array contains another field with the same value with the key `$key_FIELDNAME`, FIELDNAME defaults to `confirmation`). Usage: `confirmed` or `confirmed:FIELDNAME`
  */
-class Confirmed implements \CharlotteDunois\Validation\ValidationRule {
+class Confirmed implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.

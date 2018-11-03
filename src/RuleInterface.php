@@ -10,9 +10,9 @@
 namespace CharlotteDunois\Validation;
 
 /**
- * The ValidationRule interface that every rule has to implement.
+ * The RuleInterface interface that every rule has to implement.
  */
-interface ValidationRule {
+interface RuleInterface {
     /**
      * This method validates the value using the rule's implementation.
      * @param mixed                                  $value       The value of the field to validate.

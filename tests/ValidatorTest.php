@@ -15,7 +15,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
     }
     
     function testAddRule() {
-        $class = (new class() implements \CharlotteDunois\Validation\ValidationRule {
+        $class = (new class() implements \CharlotteDunois\Validation\RuleInterface {
             function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
                 if($value === true) {
                     return true;
@@ -108,8 +108,8 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             'callback' => 'function',
             'callable' => 'callable',
             'class' => 'class:\stdClass',
-            'class_object' => 'class:\\stdClass,object_only',
-            'class_string' => 'class:\\stdClass,string_only',
+            'class_object' => 'class:\\stdClass=object',
+            'class_string' => 'class:\\stdClass=string',
             'class_extends' => 'class:\\PHPUnit\\Framework\\TestCase',
             'null' => 'nullable|boolean'
         );
@@ -335,46 +335,54 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
         $this->assertFalse($validator2->throw(\LogicException::class));
     }
     
-    function testClass() {
+    function testClassAnyString() {
         $validator = Validator::make(
-            array('test' => '\\stdClass'),
+            array('test' => \stdClass::class),
             array('test' => 'class:\\stdClass')
         );
         
         $this->assertTrue($validator->throw(\LogicException::class));
-        
-        $validator2 = Validator::make(
+    }
+    
+    function testClassAnyObject() {
+        $validator = Validator::make(
             array('test' => (new \stdClass())),
             array('test' => 'class:\\stdClass')
         );
         
-        $this->assertTrue($validator2->throw(\LogicException::class));
-        
-        $validator3 = Validator::make(
+        $this->assertTrue($validator->throw(\LogicException::class));
+    }
+    
+    function testClassObject() {
+        $validator = Validator::make(
             array('test' => (new \stdClass())),
-            array('test' => 'class:\\stdClass,object_only')
+            array('test' => 'class:\\stdClass=object')
         );
         
-        $this->assertTrue($validator3->throw(\LogicException::class));
-        
-        $validator4 = Validator::make(
-            array('test' => '\\stdClass'),
-            array('test' => 'class:\\stdClass,string_only')
+        $this->assertTrue($validator->throw(\LogicException::class));
+    }
+    
+    function testClassString() {
+        $validator = Validator::make(
+            array('test' => \stdClass::class),
+            array('test' => 'class:\\stdClass=string')
         );
         
-        $this->assertTrue($validator4->throw(\LogicException::class));
-        
+        $this->assertTrue($validator->throw(\LogicException::class));
+    }
+    
+    function testClassFail() {
         $this->expectException(\LogicException::class);
         
-        $validator5 = Validator::make(
+        $validator = Validator::make(
             array('test' => 'muffin'),
             array('test' => 'class:\\stdClass')
         );
         
-        $this->assertFalse($validator5->throw(\LogicException::class));
+        $this->assertFalse($validator->throw(\LogicException::class));
     }
     
-    function testClass2() {
+    function testClassWrongObject() {
         $this->expectException(\LogicException::class);
         
         $validator = Validator::make(
@@ -385,29 +393,29 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
         $this->assertFalse($validator->throw(\LogicException::class));
     }
     
-    function testClass3() {
+    function testClassInvalidTypeString() {
         $this->expectException(\LogicException::class);
         
         $validator = Validator::make(
             array('test' => (new \stdClass())),
-            array('test' => 'class:\\stdClass,string_only')
+            array('test' => 'class:\\stdClass=string')
         );
         
         $this->assertFalse($validator->throw(\LogicException::class));
     }
     
-    function testClass4() {
+    function testClassInvalidTypeObject() {
         $this->expectException(\LogicException::class);
         
         $validator = Validator::make(
-            array('test' => '\\stdClass'),
-            array('test' => 'class:\\stdClass,object_only')
+            array('test' => \stdClass::class),
+            array('test' => 'class:\\stdClass=object')
         );
         
         $this->assertFalse($validator->throw(\LogicException::class));
     }
     
-    function testClass5() {
+    function testClassInvalidArg() {
         $this->expectException(\LogicException::class);
         
         $validator = Validator::make(

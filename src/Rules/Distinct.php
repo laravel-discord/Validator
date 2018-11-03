@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is an unique array.
  */
-class Distinct implements \CharlotteDunois\Validation\ValidationRule {
+class Distinct implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,7 +24,7 @@ class Distinct implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if($value !== array_unique($value)) {
+        if($value !== \array_unique($value)) {
             return 'formvalidator_make_distinct';
         }
         

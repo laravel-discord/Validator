@@ -24,10 +24,10 @@ class Validator {
     /** @var \CharlotteDunois\Validation\LanguageInterface[] */
     protected static $languages = array();
     
-    /** @var \CharlotteDunois\Validation\ValidationRule[] */
+    /** @var \CharlotteDunois\Validation\RuleInterface[] */
     protected static $rulesets = null;
     
-    /** @var \CharlotteDunois\Validation\ValidationRule[] */
+    /** @var \CharlotteDunois\Validation\RuleInterface[] */
     protected static $langrules = array();
     
     /**
@@ -59,23 +59,23 @@ class Validator {
     
     /**
      * Adds a new rule.
-     * @param \CharlotteDunois\Validation\ValidationRule  $rule
+     * @param \CharlotteDunois\Validation\RuleInterface  $rule
      * @return void
      * @throws \InvalidArgumentException
      */
-    static function addRule(\CharlotteDunois\Validation\ValidationRule $rule) {
+    static function addRule(\CharlotteDunois\Validation\RuleInterface $rule) {
         if(static::$rulesets === null) {
             static::initRules();
         }
         
-        $class = get_class($rule);
-        $arrname = explode('\\', $class);
-        $name = array_pop($arrname);
+        $class = \get_class($rule);
+        $arrname = \explode('\\', $class);
+        $name = \array_pop($arrname);
         
-        $rname = str_replace('rule', '', mb_strtolower($name));
+        $rname = \str_replace('rule', '', \mb_strtolower($name));
         static::$rulesets[$rname] = $rule;
         
-        if(mb_stripos($name, 'rule') !== false) {
+        if(\mb_stripos($name, 'rule') !== false) {
             static::$langrules[] = $rname;
         }
     }
@@ -139,9 +139,9 @@ class Validator {
         $vThrows = !empty($throws);
         
         foreach($this->rules as $key => $rule) {
-            $set = explode('|', $rule);
+            $set = \explode('|', $rule);
             
-            $exists = array_key_exists($key, $this->fields);
+            $exists = \array_key_exists($key, $this->fields);
             $value = ($exists ? $this->fields[$key] : null);
             
             $passedLang = false;
@@ -149,7 +149,7 @@ class Validator {
             
             $nullable = false;
             foreach($set as $r) {
-                $r = explode(':', $r);
+                $r = \explode(':', $r, 2);
                 if($r[0] === 'nullable') {
                     $nullable = true;
                     continue 1;
@@ -157,10 +157,10 @@ class Validator {
                     throw new \RuntimeException('Validation Rule "'.$r[0].'" does not exist');
                 }
                 
-                $return = static::$rulesets[$r[0]]->validate($value, $key, $this->fields, (array_key_exists(1, $r) ? $r[1] : null), $exists, $this);
-                $passed = is_bool($return);
+                $return = static::$rulesets[$r[0]]->validate($value, $key, $this->fields, (\array_key_exists(1, $r) ? $r[1] : null), $exists, $this);
+                $passed = \is_bool($return);
                 
-                if(in_array($r[0], static::$langrules)) {
+                if(\in_array($r[0], static::$langrules)) {
                     if($passed) {
                         $passedLang = true;
                     } else {
@@ -175,7 +175,7 @@ class Validator {
                 }
                 
                 if(!$passed) {
-                    if(is_array($return)) {
+                    if(\is_array($return)) {
                         $this->errors[$key] = $this->language($return[0], $return[1]);
                     } else {
                         $this->errors[$key] = $this->language($return);
@@ -196,7 +196,7 @@ class Validator {
             }
             
             if($vThrows && !empty($this->errors[$key])) {
-                throw new $throws($key.' '.lcfirst($this->errors[$key]));
+                throw new $throws($key.' '.\lcfirst($this->errors[$key]));
             }
         }
         
@@ -220,9 +220,9 @@ class Validator {
         
         static::$rulesets = array();
         
-        $rules = glob(__DIR__.'/Rules/*.php');
+        $rules = \glob(__DIR__.'/Rules/*.php');
         foreach($rules as $rule) {
-            $name = basename($rule, '.php');
+            $name = \basename($rule, '.php');
             if($name === 'Nullable') {
                 continue;
             }

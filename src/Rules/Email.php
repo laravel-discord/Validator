@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is a valid email address.
  */
-class Email implements \CharlotteDunois\Validation\ValidationRule {
+class Email implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,7 +24,7 @@ class Email implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+        if(!\filter_var($value, \FILTER_VALIDATE_EMAIL)) {
             return 'formvalidator_make_email';
         }
         

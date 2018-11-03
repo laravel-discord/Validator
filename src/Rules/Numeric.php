@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is numeric.
  */
-class Numeric implements \CharlotteDunois\Validation\ValidationRule {
+class Numeric implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,7 +24,7 @@ class Numeric implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if(!ctype_digit($value)) {
+        if(!\ctype_digit($value)) {
             return 'formvalidator_make_numeric';
         }
         

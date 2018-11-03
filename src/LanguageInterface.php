@@ -17,7 +17,7 @@ interface LanguageInterface {
      * Get a translation string, denoted by key. Replace the `$replacements` keys by their values in that string.
      * @param string  $key
      * @param array   $replacements
-     * @return string
+     * @return string  If not found, it must return the key.
      */
     function getTranslation(string $key, array $replacements = array());
 }

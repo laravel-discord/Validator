@@ -14,43 +14,43 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific upload field is of specific mime type (comma separated). Valid options (examples): `image/*`, `*­/*`, `image/png`. Usage: `mimetypes:MIME_TYPE`
  */
-class MimeTypes implements \CharlotteDunois\Validation\ValidationRule {
+class MimeTypes implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
      */
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
-        $finfo = finfo_open(FILEINFO_MIME);
+        $finfo = \finfo_open(\FILEINFO_MIME);
         
         if(isset($_FILES[$key])) {
-            if(!file_exists($_FILES[$key]['tmp_name'])) {
+            if(!\file_exists($_FILES[$key]['tmp_name'])) {
                 return 'formvalidator_make_invalid_file';
             }
             
-            $mime = finfo_file($finfo, $_FILES[$key]['tmp_name']);
+            $mime = \finfo_file($finfo, $_FILES[$key]['tmp_name']);
         } else {
             if(!$exists) {
                 return false;
             }
             
-            $mime = finfo_buffer($finfo, $value);
+            $mime = \finfo_buffer($finfo, $value);
         }
         
-        finfo_close($finfo);
+        \finfo_close($finfo);
         
         if(!$mime) {
             return 'formvalidator_make_invalid_file'; // @codeCoverageIgnore
         }
         
-        $mime = explode(';', $mime);
-        $mime = array_shift($mime);
+        $mime = \explode(';', $mime);
+        $mime = \array_shift($mime);
         
-        $val = explode(',', $options);
-        $result = explode('/', $mime);
+        $val = \explode(',', $options);
+        $result = \explode('/', $mime);
         
         foreach($val as $mimet) {
-            $mimee = explode('/', $mimet);
-            if(count($mimee) == 2 && count($result) == 2) {
+            $mimee = \explode('/', $mimet);
+            if(\count($mimee) == 2 && \count($result) == 2) {
                 if(($mimee[0] == "*" || $mimee[0] == $result[0]) && ($mimee[1] == "*" || $mimee[1] == $result[1])) {
                     return true;
                 }

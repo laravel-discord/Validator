@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is a valid URL.
  */
-class URL implements \CharlotteDunois\Validation\ValidationRule {
+class URL implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,7 +24,7 @@ class URL implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if(!filter_var($value, FILTER_VALIDATE_URL)) {
+        if(!\filter_var($value, \FILTER_VALIDATE_URL)) {
             return 'formvalidator_make_url';
         }
         

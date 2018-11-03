@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field passed the regex validation. Usage: `regex:REGEX_WITH_DELIMITERS`
  */
-class Regex implements \CharlotteDunois\Validation\ValidationRule {
+class Regex implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,7 +24,7 @@ class Regex implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if(preg_match($options, $value) === 0) {
+        if(\preg_match($options, $value) === 0) {
             return 'formvalidator_make_regex';
         }
         

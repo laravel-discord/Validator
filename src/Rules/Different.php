@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is different to another existing field. Usage: `different:FIELD_NAME`
  */
-class Different implements \CharlotteDunois\Validation\ValidationRule {
+class Different implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.

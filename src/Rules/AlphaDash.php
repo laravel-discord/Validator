@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field contains only alpha, dash and underscores characters.
  */
-class AlphaDash implements \CharlotteDunois\Validation\ValidationRule {
+class AlphaDash implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,7 +24,7 @@ class AlphaDash implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if(!is_string($value) || preg_match("/[^A-Za-z\-_]/u", $value)) {
+        if(!\is_string($value) || \preg_match('/[^A-Za-z\-_]/u', $value)) {
             return 'formvalidator_make_alpha_dash';
         }
         

@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field contains no whitespaces.
  */
-class NoWhitespace implements \CharlotteDunois\Validation\ValidationRule {
+class NoWhitespace implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,7 +24,7 @@ class NoWhitespace implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if(preg_match('/\s/u', $value) === 1) {
+        if(\preg_match('/\s/u', $value) === 1) {
             return 'formvalidator_make_no_whitespace';
         }
         

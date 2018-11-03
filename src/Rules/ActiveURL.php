@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is an active URL (has a DNS record).
  */
-class ActiveURL implements \CharlotteDunois\Validation\ValidationRule {
+class ActiveURL implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,7 +24,7 @@ class ActiveURL implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if(!is_string($value) || !checkdnsrr($value)) {
+        if(!\is_string($value) || !\checkdnsrr($value)) {
             return 'formvalidator_make_active_url';
         }
         

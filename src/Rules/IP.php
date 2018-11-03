@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is a valid IP address.
  */
-class IP implements \CharlotteDunois\Validation\ValidationRule {
+class IP implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,7 +24,7 @@ class IP implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if(!filter_var($value, FILTER_VALIDATE_IP)) {
+        if(!\filter_var($value, FILTER_VALIDATE_IP)) {
             return 'formvalidator_make_ip';
         }
         

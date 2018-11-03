@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is one of the specified values (comma separated). Usage: `in:VALUE_1,VALUE_2,...`
  */
-class In implements \CharlotteDunois\Validation\ValidationRule {
+class In implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,8 +24,8 @@ class In implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        $n = explode(',', $options);
-        if(!in_array($value, $n)) {
+        $n = \explode(',', $options);
+        if(!\in_array($value, $n)) {
             return array('formvalidator_make_in', array('{0}' => $options));
         }
         

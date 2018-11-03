@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is a float.
  */
-class FloatRule implements \CharlotteDunois\Validation\ValidationRule {
+class FloatRule implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,7 +24,7 @@ class FloatRule implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if(!is_float($value)) {
+        if(!\is_float($value)) {
             return 'formvalidator_make_float';
         }
         

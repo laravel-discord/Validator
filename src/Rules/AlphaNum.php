@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field contains only alphanumeric characters.
  */
-class AlphaNum implements \CharlotteDunois\Validation\ValidationRule {
+class AlphaNum implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,7 +24,7 @@ class AlphaNum implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if(!is_string($value) || !ctype_alnum($value)) {
+        if(!\is_string($value) || !\ctype_alnum($value)) {
             return 'formvalidator_make_alpha_num';
         }
         

@@ -14,7 +14,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * This rule ensures a specific field is accepted (value: `yes`, `on`, `1` or `true`).
  */
-class Accepted implements \CharlotteDunois\Validation\ValidationRule {
+class Accepted implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
      * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
@@ -24,7 +24,7 @@ class Accepted implements \CharlotteDunois\Validation\ValidationRule {
             return false;
         }
         
-        if(!in_array($value, array('yes', 'on', 1, true, '1', 'true'), true)) {
+        if(!\in_array($value, array('yes', 'on', 1, true, '1', 'true'), true)) {
             return 'formvalidator_make_accepted';
         }
         
