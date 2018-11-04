@@ -82,14 +82,15 @@ class Validator {
     
     /**
      * Adds a language to the languages array and makes it usable by the Validator.
+     * Any language code can be overwritten, **if** the new language is a subclass of it.
      * @param string                                         $langCode
      * @param \CharlotteDunois\Validation\LanguageInterface  $language
      * @return void
      * @throws \InvalidArgumentException
      */
     static function addLanguage(string $langCode, \CharlotteDunois\Validation\LanguageInterface $language) {
-        if(isset(static::$languages[$langCode])) {
-            throw new \InvalidArgumentException('Given language code is already in use');
+        if(isset(static::$languages[$langCode]) && !\is_subclass_of($language, \get_class(static::$languages[$langCode]))) {
+            throw new \InvalidArgumentException('Given language code is already in use or not a subclass');
         }
         
         static::$languages[$langCode] = $language;

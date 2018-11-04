@@ -71,6 +71,14 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
         \CharlotteDunois\Validation\Validator::addLanguage('ok', $lang);
     }
     
+    function testAddLanguageSubclass() {
+        $lang = (new class() extends \CharlotteDunois\Validation\Languages\GermanLanguage {
+            // Nothing to overwrite
+        });
+        
+        $this->assertNull(\CharlotteDunois\Validation\Validator::addLanguage('de', $lang));
+    }
+    
     function testValidatorConstructorNoRules() {
         $fields = array(
             'other' => 'hi'
