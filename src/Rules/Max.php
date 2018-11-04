@@ -23,7 +23,7 @@ namespace CharlotteDunois\Validation\Rules;
 class Max implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
-     * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
+     * @return bool|string|array
      */
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if(isset($_FILES[$key]) && \file_exists($_FILES[$key]['tmp_name']) && $_FILES[$key]['error'] == 0) {

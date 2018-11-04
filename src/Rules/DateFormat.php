@@ -17,7 +17,7 @@ namespace CharlotteDunois\Validation\Rules;
 class DateFormat implements \CharlotteDunois\Validation\RuleInterface {
     /**
      * {@inheritdoc}
-     * @return bool|string|array  Return false to "skip" the rule. Return true to mark the rule as passed.
+     * @return bool|string|array
      */
     function validate($value, $key, $fields, $options, $exists, \CharlotteDunois\Validation\Validator $validator) {
         if(!$exists) {
