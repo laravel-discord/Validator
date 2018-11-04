@@ -28,7 +28,7 @@ class Validator {
     protected static $rulesets = null;
     
     /** @var \CharlotteDunois\Validation\RuleInterface[] */
-    protected static $langrules = array();
+    protected static $typeRules = array();
     
     /**
      * Constructor
@@ -76,7 +76,7 @@ class Validator {
         static::$rulesets[$rname] = $rule;
         
         if(\mb_stripos($name, 'rule') !== false) {
-            static::$langrules[] = $rname;
+            static::$typeRules[] = $rname;
         }
     }
     
@@ -161,7 +161,7 @@ class Validator {
                 $return = static::$rulesets[$r[0]]->validate($value, $key, $this->fields, (\array_key_exists(1, $r) ? $r[1] : null), $exists, $this);
                 $passed = \is_bool($return);
                 
-                if(\in_array($r[0], static::$langrules)) {
+                if(\in_array($r[0], static::$typeRules)) {
                     if($passed) {
                         $passedLang = true;
                     } else {

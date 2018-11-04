@@ -91,7 +91,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
         $validator = (new class($fields, $rules, 'en') extends Validator {
             function __construct(array $fields, array $rules, string $lang) {
                 static::$rulesets = null;
-                static::$langrules = array();
+                static::$typeRules = array();
                 
                 parent::__construct($fields, $rules, $lang);
             }
