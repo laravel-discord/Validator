@@ -17,7 +17,7 @@ namespace CharlotteDunois\Validation\Rules;
  *
  * You can ensure that only class names get passed by appending `=string`, or only objects by `=object`.
  *
- * Usage: `class` or `class:CLASS_NAME`
+ * Usage: `class:CLASS_NAME` or `class:CLASS_NAME=string` or `class:CLASS_NAME=object`
  */
 class ClassRule implements \CharlotteDunois\Validation\RuleInterface {
     /**
