@@ -92,7 +92,7 @@
 
     <p>    class
     <strong>ClassRule</strong>        implements
-        <a href="../../../CharlotteDunois/Validation/ValidationRule.html"><abbr title="CharlotteDunois\Validation\ValidationRule">ValidationRule</abbr></a>        (<a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Rules/ClassRule.php" target="_blank">View source</a>)
+        <a href="../../../CharlotteDunois/Validation/RuleInterface.html"><abbr title="CharlotteDunois\Validation\RuleInterface">RuleInterface</abbr></a>        (<a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Rules/ClassRule.php" target="_blank">View source</a>)
 </p>
 
         
@@ -102,7 +102,7 @@
             <p>Name: <code>class</code> - Type Rule</p>            <p>This rule ensures a specific field is a string containing a valid class name or a class instance.
 The options value ensures the class is either of that type, or extending it or implementing it.</p>
 
-<p>You can ensure that only class names get passed by appending <code>,string_only</code> - or only objects by <code>,object_only</code>.</p>
+<p>You can ensure that only class names get passed by appending <code>=string</code>, or only objects by <code>=object</code>.</p>
 
 <p>Usage: <code>class</code> or <code>class:CLASS_NAME</code></p>                    </div>
     
@@ -183,7 +183,7 @@ The options value ensures the class is either of that type, or extending it or i
                     <table class="table table-condensed">
         <tr>
             <td>bool|string|array</td>
-            <td>Return false to "skip" the rule. Return true to mark the rule as passed.</td>
+            <td>Return false to "skip" the rule. Return true to mark the rule as passed. <code>array</code> means <code>[ $key, $replacements ]</code>. <code>string</code> is just <code>$key</code>.</td>
         </tr>
     </table>
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="robots" content="index, follow, all" />
-    <title>CharlotteDunois\Validation\ValidationRule | Validator</title>
+    <title>CharlotteDunois\Validation\RuleInterface | Validator</title>
 
             <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
@@ -21,7 +21,7 @@
     
     </head>
 
-    <body id="class" data-name="class:CharlotteDunois_Validation_ValidationRule" data-root-path="../../">
+    <body id="class" data-name="class:CharlotteDunois_Validation_RuleInterface" data-root-path="../../">
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
@@ -78,27 +78,27 @@
                         <div class="namespace-breadcrumbs">
             <ol class="breadcrumb">
                 <li><span class="label label-default">interface</span></li>
-                        <li><a href="../../CharlotteDunois.html">CharlotteDunois</a></li><li class="backslash">\</li><li><a href="../../CharlotteDunois/Validation.html">Validation</a></li><li class="backslash">\</li><li>ValidationRule</li>
+                        <li><a href="../../CharlotteDunois.html">CharlotteDunois</a></li><li class="backslash">\</li><li><a href="../../CharlotteDunois/Validation.html">Validation</a></li><li class="backslash">\</li><li>RuleInterface</li>
             </ol>
         </div>
                 <div id="page-content">
                 
     <div class="page-header">
         <h1>
-            ValidationRule
+            RuleInterface
                 
         </h1>
     </div>
 
     <p>    interface
-    <strong>ValidationRule</strong>        (<a href="https://github.com/CharlotteDunois/Validator/blob/master/src/ValidationRule.php" target="_blank">View source</a>)
+    <strong>RuleInterface</strong>        (<a href="https://github.com/CharlotteDunois/Validator/blob/master/src/RuleInterface.php" target="_blank">View source</a>)
 </p>
 
         
     
 
             <div class="description">
-            <p>The ValidationRule interface that every rule has to implement.</p>                                </div>
+            <p>The validation rule interface every rule has to implement.</p>                                </div>
     
     
     
@@ -124,7 +124,7 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method_validate">
-        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/ValidationRule.php#L26">line 26</a></div>
+        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/RuleInterface.php#L26">line 26</a></div>
         <code>                    bool|string|array
     <strong>validate</strong>(mixed $value, string $key, array $fields, mixed $options, bool $exists, <a href="../../CharlotteDunois/Validation/Validator.html"><abbr title="CharlotteDunois\Validation\Validator">Validator</abbr></a> $validator)
         </code>
@@ -177,7 +177,7 @@
                     <table class="table table-condensed">
         <tr>
             <td>bool|string|array</td>
-            <td>Return false to "skip" the rule. Return true to mark the rule as passed.</td>
+            <td>Return false to "skip" the rule. Return true to mark the rule as passed. <code>array</code> means <code>[ $key, $replacements ]</code>. <code>string</code> is just <code>$key</code>.</td>
         </tr>
     </table>
 

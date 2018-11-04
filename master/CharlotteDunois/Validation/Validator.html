@@ -121,7 +121,7 @@
                     static&nbsp;void
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_addRule">addRule</a>(<a href="../../CharlotteDunois/Validation/ValidationRule.html"><abbr title="CharlotteDunois\Validation\ValidationRule">ValidationRule</abbr></a> $rule)
+                    <a href="#method_addRule">addRule</a>(<a href="../../CharlotteDunois/Validation/RuleInterface.html"><abbr title="CharlotteDunois\Validation\RuleInterface">RuleInterface</abbr></a> $rule)
         
                                             <p>Adds a new rule.</p>                </div>
                 <div class="col-md-2"></div>
@@ -194,7 +194,7 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method_addLanguage">
-        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L90">line 90</a></div>
+        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L91">line 91</a></div>
         <code>        static            void
     <strong>addLanguage</strong>(string $langCode, <a href="../../CharlotteDunois/Validation/LanguageInterface.html"><abbr title="CharlotteDunois\Validation\LanguageInterface">LanguageInterface</abbr></a> $language)
         </code>
@@ -204,7 +204,7 @@
     
 
                     <div class="method-description">
-                                    <p>Adds a language to the languages array and makes it usable by the Validator.</p>                                                </div>
+                                    <p>Adds a language to the languages array and makes it usable by the Validator.</p>                    <p>Any language code can be overwritten, <strong>if</strong> the new language is a subclass of it.</p>                            </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -252,7 +252,7 @@
                     <h3 id="method_addRule">
         <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L66">line 66</a></div>
         <code>        static            void
-    <strong>addRule</strong>(<a href="../../CharlotteDunois/Validation/ValidationRule.html"><abbr title="CharlotteDunois\Validation\ValidationRule">ValidationRule</abbr></a> $rule)
+    <strong>addRule</strong>(<a href="../../CharlotteDunois/Validation/RuleInterface.html"><abbr title="CharlotteDunois\Validation\RuleInterface">RuleInterface</abbr></a> $rule)
         </code>
     </h3>
     <div class="details">
@@ -266,7 +266,7 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../CharlotteDunois/Validation/ValidationRule.html"><abbr title="CharlotteDunois\Validation\ValidationRule">ValidationRule</abbr></a></td>
+                <td><a href="../../CharlotteDunois/Validation/RuleInterface.html"><abbr title="CharlotteDunois\Validation\RuleInterface">RuleInterface</abbr></a></td>
                 <td>$rule</td>
                 <td></td>
             </tr>
@@ -301,7 +301,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_errors">
-        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L102">line 102</a></div>
+        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L103">line 103</a></div>
         <code>                    array
     <strong>errors</strong>()
         </code>
@@ -333,7 +333,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_fails">
-        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L120">line 120</a></div>
+        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L121">line 121</a></div>
         <code>                    bool
     <strong>fails</strong>()
         </code>
@@ -374,7 +374,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_language">
-        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L213">line 213</a></div>
+        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L214">line 214</a></div>
         <code>                    string
     <strong>language</strong>(string $key, array $replacements = array())
         </code>
@@ -473,7 +473,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_passes">
-        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L111">line 111</a></div>
+        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L112">line 112</a></div>
         <code>                    bool
     <strong>passes</strong>()
         </code>
@@ -514,7 +514,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_throw">
-        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L130">line 130</a></div>
+        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L131">line 131</a></div>
         <code>                    bool
     <strong>throw</strong>(string $class = &#039;\\RuntimeException&#039;)
         </code>

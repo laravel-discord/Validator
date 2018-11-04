@@ -92,7 +92,7 @@
 
     <p>    class
     <strong>FloatRule</strong>        implements
-        <a href="../../../CharlotteDunois/Validation/ValidationRule.html"><abbr title="CharlotteDunois\Validation\ValidationRule">ValidationRule</abbr></a>        (<a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Rules/FloatRule.php" target="_blank">View source</a>)
+        <a href="../../../CharlotteDunois/Validation/RuleInterface.html"><abbr title="CharlotteDunois\Validation\RuleInterface">RuleInterface</abbr></a>        (<a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Rules/FloatRule.php" target="_blank">View source</a>)
 </p>
 
         
@@ -178,7 +178,7 @@
                     <table class="table table-condensed">
         <tr>
             <td>bool|string|array</td>
-            <td>Return false to "skip" the rule. Return true to mark the rule as passed.</td>
+            <td>Return false to "skip" the rule. Return true to mark the rule as passed. <code>array</code> means <code>[ $key, $replacements ]</code>. <code>string</code> is just <code>$key</code>.</td>
         </tr>
     </table>
 
