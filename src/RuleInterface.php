@@ -10,7 +10,7 @@
 namespace CharlotteDunois\Validation;
 
 /**
- * The RuleInterface interface that every rule has to implement.
+ * The validation rule interface every rule has to implement.
  */
 interface RuleInterface {
     /**
