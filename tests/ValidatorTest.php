@@ -114,6 +114,7 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             'age_string' => 'numeric|in:16,17,18,19,20',
             'deez' => 'array:integer|distinct',
             'callback' => 'function',
+            'callback2' => 'function',
             'callable' => 'callable',
             'class' => 'class:\stdClass',
             'class_object' => 'class:\\stdClass=object',
@@ -341,6 +342,97 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
         );
         
         $this->assertFalse($validator2->throw(\LogicException::class));
+    }
+    
+    function testCallback(): void {
+        $validator = Validator::make(
+            array('test' => function (?string $a = null): ?int {}),
+            array('test' => 'callback:?string?=?int')
+        );
+        
+        $this->assertTrue($validator->throw(\LogicException::class));
+        
+        $validator2 = Validator::make(
+            array('test' => array(self::class, 'testCallback')),
+            array('test' => 'callback:=void')
+        );
+        
+        $this->assertTrue($validator2->throw(\LogicException::class));
+    }
+    
+    function testCallbackLessParams() {
+        $validator = Validator::make(
+            array('test' => function (): int {}),
+            array('test' => 'callback:?string?=int')
+        );
+        
+        $this->assertTrue($validator->throw(\LogicException::class));
+    }
+    
+    function testCallbackNoCallableFailure() {
+        $this->expectException(\LogicException::class);
+        
+        $validator = Validator::make(
+            array('test' => 'what is this'),
+            array('test' => 'callback:=void')
+        );
+        
+        $this->assertFalse($validator->throw(\LogicException::class));
+    }
+    
+    function testCallbackNoOptionsFailure() {
+        $this->expectException(\LogicException::class);
+        
+        $validator = Validator::make(
+            array('test' => 'var_dump'),
+            array('test' => 'callback')
+        );
+        
+        $this->assertFalse($validator->throw(\LogicException::class));
+    }
+    
+    function testCallbackMoreParamsFailure() {
+        $this->expectException(\LogicException::class);
+        
+        $validator = Validator::make(
+            array('test' => function (string $a, int $b) {}),
+            array('test' => 'callback:string=void')
+        );
+        
+        $this->assertFalse($validator->throw(\LogicException::class));
+    }
+    
+    function testCallbackNoReturnFailure() {
+        $this->expectException(\LogicException::class);
+        
+        $validator = Validator::make(
+            array('test' => function (string $a) {}),
+            array('test' => 'callback:string=void')
+        );
+        
+        $this->assertFalse($validator->throw(\LogicException::class));
+    }
+    
+    function testCallbackNoMatchingReturnFailure() {
+        $this->expectException(\LogicException::class);
+        
+        $validator = Validator::make(
+            array('test' => function (string $a): int {}),
+            array('test' => 'callback:string=void')
+        );
+        
+        $this->assertFalse($validator->throw(\LogicException::class));
+    }
+    
+    function testCallbackNoMatchingNullReturnFailure() {
+        $this->expectException(\LogicException::class);
+        
+        $validator = Validator::make(
+            array('test' => function (string $a): int {}),
+            array('test' => 'callback:string=?int')
+        );
+        
+        $this->assertFalse($validator->throw(\LogicException::class));
     }
     
     function testClassAnyString() {
