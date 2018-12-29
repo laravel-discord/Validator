@@ -50,7 +50,7 @@ class Callback implements \CharlotteDunois\Validation\RuleInterface {
         
         $options = \explode('=', $options, 2);
         
-        if(isset($options[0])) {
+        if(!empty($options[0])) {
             $params = \explode(',', $options[0]);
             
             /** @var \ReflectionParameter  $param */

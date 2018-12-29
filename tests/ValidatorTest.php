@@ -113,8 +113,8 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
             'age' => 'integer|min:16|max:40',
             'age_string' => 'numeric|in:16,17,18,19,20',
             'deez' => 'array:integer|distinct',
-            'callback' => 'function',
-            'callback2' => 'function',
+            'fun' => 'function',
+            'callback2' => 'callback',
             'callable' => 'callable',
             'class' => 'class:\stdClass',
             'class_object' => 'class:\\stdClass=object',
@@ -360,6 +360,15 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
         $this->assertTrue($validator2->throw(\LogicException::class));
     }
     
+    function testCallbackWildcard(): void {
+        $validator = Validator::make(
+            array('test' => function (?string $a = null, $b = null): ?int {}),
+            array('test' => 'callback:,=?int')
+        );
+        
+        $this->assertTrue($validator->throw(\LogicException::class));
+    }
+    
     function testCallbackLessParams() {
         $validator = Validator::make(
             array('test' => function (): int {}),
@@ -397,6 +406,28 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
         $validator = Validator::make(
             array('test' => function (string $a, int $b) {}),
             array('test' => 'callback:string=void')
+        );
+        
+        $this->assertFalse($validator->throw(\LogicException::class));
+    }
+    
+    function testCallbackParamTypeFailure() {
+        $this->expectException(\LogicException::class);
+        
+        $validator = Validator::make(
+            array('test' => function (string $a) {}),
+            array('test' => 'callback:int=void')
+        );
+        
+        $this->assertFalse($validator->throw(\LogicException::class));
+    }
+    
+    function testCallbackNotNullableParamTypeFailure() {
+        $this->expectException(\LogicException::class);
+        
+        $validator = Validator::make(
+            array('test' => function (string $a) {}),
+            array('test' => 'callback:?string=void')
         );
         
         $this->assertFalse($validator->throw(\LogicException::class));
