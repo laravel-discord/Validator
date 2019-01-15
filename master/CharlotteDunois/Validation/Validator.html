@@ -112,16 +112,6 @@
                     static&nbsp;void
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_addLanguage">addLanguage</a>(string $langCode, <a href="../../CharlotteDunois/Validation/LanguageInterface.html"><abbr title="CharlotteDunois\Validation\LanguageInterface">LanguageInterface</abbr></a> $language)
-        
-                                            <p>Adds a language to the languages array and makes it usable by the Validator.</p>                </div>
-                <div class="col-md-2"></div>
-            </div>
-                    <div class="row">
-                <div class="col-md-2 type">
-                    static&nbsp;void
-                </div>
-                <div class="col-md-8 type">
                     <a href="#method_addRule">addRule</a>(<a href="../../CharlotteDunois/Validation/RuleInterface.html"><abbr title="CharlotteDunois\Validation\RuleInterface">RuleInterface</abbr></a> $rule)
         
                                             <p>Adds a new rule.</p>                </div>
@@ -162,7 +152,7 @@
                     static&nbsp;<a href="../../CharlotteDunois/Validation/Validator.html"><abbr title="CharlotteDunois\Validation\Validator">Validator</abbr></a>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_make">make</a>(array $fields, array $rules, string $lang = &#039;en&#039;)
+                    <a href="#method_make">make</a>(array $fields, array $rules, bool $strict = false)
         
                                             <p>Create a new Validator instance.</p>                </div>
                 <div class="col-md-2"></div>
@@ -175,6 +165,26 @@
                     <a href="#method_passes">passes</a>()
         
                                             <p>Determine if the data passes the validation rules.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDefaultLanguage">setDefaultLanguage</a>(string $language)
+        
+                                            <p>Sets the default language for the Validator.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    $this
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setLanguage">setLanguage</a>(<a href="../../CharlotteDunois/Validation/LanguageInterface.html"><abbr title="CharlotteDunois\Validation\LanguageInterface">LanguageInterface</abbr></a> $language)
+        
+                                            <p>Sets the language for the Validator.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -194,64 +204,8 @@
 
             <div id="method-details">
                     <div class="method-item">
-                    <h3 id="method_addLanguage">
-        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L91">line 91</a></div>
-        <code>        static            void
-    <strong>addLanguage</strong>(string $langCode, <a href="../../CharlotteDunois/Validation/LanguageInterface.html"><abbr title="CharlotteDunois\Validation\LanguageInterface">LanguageInterface</abbr></a> $language)
-        </code>
-    </h3>
-    <div class="details">
-            
-    
-
-                    <div class="method-description">
-                                    <p>Adds a language to the languages array and makes it usable by the Validator.</p>                    <p>Any language code can be overwritten, <strong>if</strong> the new language is a subclass of it.</p>                            </div>
-                <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table class="table table-condensed">
-                    <tr>
-                <td>string</td>
-                <td>$langCode</td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td><a href="../../CharlotteDunois/Validation/LanguageInterface.html"><abbr title="CharlotteDunois\Validation\LanguageInterface">LanguageInterface</abbr></a></td>
-                <td>$language</td>
-                <td></td>
-            </tr>
-            </table>
-
-            
-                            <h4>Return Value</h4>
-
-                    <table class="table table-condensed">
-        <tr>
-            <td>void</td>
-            <td></td>
-        </tr>
-    </table>
-
-            
-                            <h4>Exceptions</h4>
-
-                    <table class="table table-condensed">
-                    <tr>
-                <td><a href="https://secure.php.net/InvalidArgumentException" target="_blank">InvalidArgumentException</a></td>
-                <td></td>
-            </tr>
-            </table>
-
-            
-                        
-                        
-                    </div>
-    </div>
-
-            </div>
-                    <div class="method-item">
                     <h3 id="method_addRule">
-        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L66">line 66</a></div>
+        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L77">line 77</a></div>
         <code>        static            void
     <strong>addRule</strong>(<a href="../../CharlotteDunois/Validation/RuleInterface.html"><abbr title="CharlotteDunois\Validation\RuleInterface">RuleInterface</abbr></a> $rule)
         </code>
@@ -302,7 +256,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_errors">
-        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L103">line 103</a></div>
+        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L125">line 125</a></div>
         <code>                    array
     <strong>errors</strong>()
         </code>
@@ -334,7 +288,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_fails">
-        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L121">line 121</a></div>
+        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L143">line 143</a></div>
         <code>                    bool
     <strong>fails</strong>()
         </code>
@@ -375,7 +329,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_language">
-        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L214">line 214</a></div>
+        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L251">line 251</a></div>
         <code>                    string
     <strong>language</strong>(string $key, array $replacements = array())
         </code>
@@ -422,9 +376,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_make">
-        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L56">line 56</a></div>
+        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L67">line 67</a></div>
         <code>        static            <a href="../../CharlotteDunois/Validation/Validator.html"><abbr title="CharlotteDunois\Validation\Validator">Validator</abbr></a>
-    <strong>make</strong>(array $fields, array $rules, string $lang = &#039;en&#039;)
+    <strong>make</strong>(array $fields, array $rules, bool $strict = false)
         </code>
     </h3>
     <div class="details">
@@ -448,9 +402,9 @@
                 <td>The validation rules.</td>
             </tr>
                     <tr>
-                <td>string</td>
-                <td>$lang</td>
-                <td>The language for error messages (included are 'en' or 'de').</td>
+                <td>bool</td>
+                <td>$strict</td>
+                <td>Whether unknown fields make validation fail.</td>
             </tr>
             </table>
 
@@ -474,7 +428,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_passes">
-        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L112">line 112</a></div>
+        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L134">line 134</a></div>
         <code>                    bool
     <strong>passes</strong>()
         </code>
@@ -514,8 +468,110 @@
 
             </div>
                     <div class="method-item">
+                    <h3 id="method_setDefaultLanguage">
+        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L100">line 100</a></div>
+        <code>        static            void
+    <strong>setDefaultLanguage</strong>(string $language)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Sets the default language for the Validator.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$language</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="https://secure.php.net/InvalidArgumentException" target="_blank">InvalidArgumentException</a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                        
+                        
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setLanguage">
+        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L116">line 116</a></div>
+        <code>                    $this
+    <strong>setLanguage</strong>(<a href="../../CharlotteDunois/Validation/LanguageInterface.html"><abbr title="CharlotteDunois\Validation\LanguageInterface">LanguageInterface</abbr></a> $language)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Sets the language for the Validator.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../CharlotteDunois/Validation/LanguageInterface.html"><abbr title="CharlotteDunois\Validation\LanguageInterface">LanguageInterface</abbr></a></td>
+                <td>$language</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>$this</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="https://secure.php.net/InvalidArgumentException" target="_blank">InvalidArgumentException</a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                        
+                        
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
                     <h3 id="method_throw">
-        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L131">line 131</a></div>
+        <div class="location">at         <a href="https://github.com/CharlotteDunois/Validator/blob/master/src/Validator.php#L153">line 153</a></div>
         <code>                    bool
     <strong>throw</strong>(string $class = &#039;\\RuntimeException&#039;)
         </code>
