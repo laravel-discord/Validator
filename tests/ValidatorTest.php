@@ -10,6 +10,10 @@
 namespace CharlotteDunois\Validation;
 
 final class ValidatorTest extends \PHPUnit\Framework\TestCase {
+    function setUp() {
+        \CharlotteDunois\Validation\Validator::setDefaultLanguage(\CharlotteDunois\Validation\Languages\EnglishLanguage::class);
+    }
+    
     function tearDown() {
         unset($_FILES['test']);
     }
@@ -41,26 +45,26 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
         $this->assertTrue($validator->throw(\LogicException::class));
     }
     
-    function testAddLanguage() {
+    function testSetDefaultLanguage() {
         $lang = (new class() implements \CharlotteDunois\Validation\LanguageInterface {
             function getTranslation(string $key, array $replacements = array()) {
                 return 'ok';
             }
         });
         
-        \CharlotteDunois\Validation\Validator::addLanguage('ok', $lang);
+        \CharlotteDunois\Validation\Validator::setDefaultLanguage(\get_class($lang));
         
         $validator = \CharlotteDunois\Validation\Validator::make(array(
             'other' => 5
         ), array(
             'other' => 'string'
-        ), 'ok');
+        ));
         
         $this->assertFalse($validator->passes());
         $this->assertSame(array('other' => 'ok'), $validator->errors());
     }
     
-    function testAddLanguageFail() {
+    function testSetDefaultLanguageUnknownClass() {
         $lang = (new class() implements \CharlotteDunois\Validation\LanguageInterface {
             function getTranslation(string $key, array $replacements = array()) {
                 return 'ok';
@@ -68,15 +72,34 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
         });
         
         $this->expectException(\InvalidArgumentException::class);
-        \CharlotteDunois\Validation\Validator::addLanguage('ok', $lang);
+        \CharlotteDunois\Validation\Validator::setDefaultLanguage('abc');
     }
     
-    function testAddLanguageSubclass() {
-        $lang = (new class() extends \CharlotteDunois\Validation\Languages\GermanLanguage {
-            // Nothing to overwrite
+    function testSetDefaultLanguageInvalidClass() {
+        $lang = (new class() { });
+        
+        $this->expectException(\InvalidArgumentException::class);
+        \CharlotteDunois\Validation\Validator::setDefaultLanguage(\get_class($lang));
+    }
+    
+    function testSetLanguage() {
+        $lang = (new class() implements \CharlotteDunois\Validation\LanguageInterface {
+            function getTranslation(string $key, array $replacements = array()) {
+                return 'ok';
+            }
         });
         
-        $this->assertNull(\CharlotteDunois\Validation\Validator::addLanguage('de', $lang));
+        $validator = \CharlotteDunois\Validation\Validator::make(array(
+            'other' => 5
+        ), array(
+            'other' => 'string'
+        ));
+        
+        $vrt = $validator->setLanguage($lang);
+        $this->assertSame($validator, $vrt);
+        
+        $this->assertFalse($validator->passes());
+        $this->assertSame(array('other' => 'ok'), $validator->errors());
     }
     
     function testValidatorConstructorNoRules() {
@@ -1429,7 +1452,6 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
     
     function testInvalidRule() {
         $this->expectException(\RuntimeException::class);
-        
         Validator::make(array('field' => 'int'), array('field' => 'int'))->throw();
     }
     
@@ -1439,5 +1461,14 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
         $this->assertSame('test', $validator->language('test'));
         $this->assertSame('Is smaller / before than 1', $validator->language('formvalidator_make_before', array('{0}' => '1')));
         $this->assertSame(array(), $validator->errors());
+    }
+    
+    function testUnknownField() {
+        $validator = Validator::make(array('ha' => 'string'), array(), true);
+        
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('"ha" is an unknown field');
+        
+        $validator->throw(\LogicException::class);
     }
 }

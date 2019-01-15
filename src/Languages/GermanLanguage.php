@@ -19,6 +19,7 @@ class GermanLanguage implements \CharlotteDunois\Validation\LanguageInterface {
      * @var string[]
      */
     protected $translations = array(
+        'formvalidator_unknown_field' => 'Ist ein unbekanntes Feld',
         'formvalidator_make_accepted' => 'Ist nicht akzeptiert',
         'formvalidator_make_active_url' => 'Ist keine aktive URL',
         'formvalidator_make_after' => 'Ist nicht grösser/nachher als {0}',

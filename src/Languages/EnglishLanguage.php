@@ -19,7 +19,8 @@ class EnglishLanguage implements \CharlotteDunois\Validation\LanguageInterface {
      * @var string[]
      */
     protected $translations = array(
-        'formvalidator_make_accepted' => 'Not accepted',
+        'formvalidator_unknown_field' => 'Is an unknown field',
+        'formvalidator_make_accepted' => 'Is not accepted',
         'formvalidator_make_active_url' => 'Is not an active URL',
         'formvalidator_make_after' => 'Is not bigger / after than {0}',
         'formvalidator_make_alpha' => 'Does not contain alphabetical characters',

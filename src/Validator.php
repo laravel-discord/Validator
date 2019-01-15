@@ -14,32 +14,43 @@ namespace CharlotteDunois\Validation;
  * Type Rules are non-exclusive (that means specifying two type rules means either one is passing).
  */
 class Validator {
+    /** @var array */
     protected $errors = array();
+    
+    /** @var array */
     protected $fields = array();
+    
+    /** @var array */
     protected $rules = array();
     
-    /** @var string */
-    protected $lang = null;
+    /** @var bool */
+    protected $strict;
     
-    /** @var \CharlotteDunois\Validation\LanguageInterface[] */
-    protected static $languages = array();
+    /** @var \CharlotteDunois\Validation\LanguageInterface */
+    protected $lang;
+    
+    /** @var string */
+    protected static $defaultLanguage = \CharlotteDunois\Validation\Languages\EnglishLanguage::class;
     
     /** @var \CharlotteDunois\Validation\RuleInterface[] */
-    protected static $rulesets = null;
+    protected static $rulesets;
     
     /** @var \CharlotteDunois\Validation\RuleInterface[] */
     protected static $typeRules = array();
     
     /**
      * Constructor
-     * @param  array   $fields
-     * @param  array   $rules
-     * @param  string  $lang
+     * @param  array  $fields
+     * @param  array  $rules
+     * @param  bool   $strict
      */
-    protected function __construct(array $fields, array $rules, string $lang) {
+    protected function __construct(array $fields, array $rules, bool $strict) {
         $this->fields = $fields;
         $this->rules = $rules;
-        $this->lang = $lang;
+        $this->strict = $strict;
+        
+        $lang = static::$defaultLanguage;
+        $this->lang = new $lang();
         
         if(static::$rulesets === null) {
             static::initRules();
@@ -48,13 +59,13 @@ class Validator {
     
     /**
      * Create a new Validator instance.
-     * @param  array   $fields   The fields you wanna run the validation against.
-     * @param  array   $rules    The validation rules.
-     * @param  string  $lang     The language for error messages (included are 'en' or 'de').
+     * @param  array  $fields  The fields you wanna run the validation against.
+     * @param  array  $rules   The validation rules.
+     * @param  bool   $strict  Whether unknown fields make validation fail.
      * @return Validator
      */
-    static function make(array $fields, array $rules, string $lang = 'en') {
-        return (new static($fields, $rules, $lang));
+    static function make(array $fields, array $rules, bool $strict = false) {
+        return (new static($fields, $rules, $strict));
     }
     
     /**
@@ -81,19 +92,30 @@ class Validator {
     }
     
     /**
-     * Adds a language to the languages array and makes it usable by the Validator.
-     * Any language code can be overwritten, **if** the new language is a subclass of it.
-     * @param string                                         $langCode
-     * @param \CharlotteDunois\Validation\LanguageInterface  $language
+     * Sets the default language for the Validator.
+     * @param string  $language
      * @return void
      * @throws \InvalidArgumentException
      */
-    static function addLanguage(string $langCode, \CharlotteDunois\Validation\LanguageInterface $language) {
-        if(isset(static::$languages[$langCode]) && !\is_subclass_of($language, \get_class(static::$languages[$langCode]))) {
-            throw new \InvalidArgumentException('Given language code is already in use or not a subclass');
+    static function setDefaultLanguage(string $language) {
+        if(!\class_exists($language, true)) {
+            throw new \InvalidArgumentException('Unknown language class');
+        } elseif(!\in_array(\CharlotteDunois\Validation\LanguageInterface::class, \class_implements($language), true)) {
+            throw new \InvalidArgumentException('Invalid language class (not implementing language interface)');
         }
         
-        static::$languages[$langCode] = $language;
+        static::$defaultLanguage = $language;
+    }
+    
+    /**
+     * Sets the language for the Validator.
+     * @param \CharlotteDunois\Validation\LanguageInterface  $language
+     * @return $this
+     * @throws \InvalidArgumentException
+     */
+    function setLanguage(\CharlotteDunois\Validation\LanguageInterface $language) {
+        $this->lang = $language;
+        return $this;
     }
     
     /**
@@ -138,12 +160,15 @@ class Validator {
      */
     protected function startValidation(string $throws = '') {
         $vThrows = !empty($throws);
+        $fields = $this->fields;
         
         foreach($this->rules as $key => $rule) {
             $set = \explode('|', $rule);
             
             $exists = \array_key_exists($key, $this->fields);
             $value = ($exists ? $this->fields[$key] : null);
+            
+            unset($fields[$key]);
             
             $passedLang = false;
             $failedOtherRules = false;
@@ -201,6 +226,18 @@ class Validator {
             }
         }
         
+        if($this->strict) {
+            foreach($fields as $key => $_) {
+                $msg = $this->language('formvalidator_unknown_field');
+                
+                if($vThrows) {
+                    throw new $throws('"'.$key.'" '.\lcfirst($msg));
+                }
+                
+                $this->errors[$key] = $msg;
+            }
+        }
+        
         return empty($this->errors);
     }
     
@@ -212,13 +249,10 @@ class Validator {
      * @return string
      */
     function language(string $key, array $replacements = array()) {
-        return static::$languages[$this->lang]->getTranslation($key, $replacements);
+        return $this->lang->getTranslation($key, $replacements);
     }
     
     protected static function initRules() {
-        static::$languages['en'] = new \CharlotteDunois\Validation\Languages\EnglishLanguage();
-        static::$languages['de'] = new \CharlotteDunois\Validation\Languages\GermanLanguage();
-        
         static::$rulesets = array();
         
         $rules = \glob(__DIR__.'/Rules/*.php');
