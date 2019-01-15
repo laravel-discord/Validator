@@ -1466,6 +1466,13 @@ final class ValidatorTest extends \PHPUnit\Framework\TestCase {
     function testUnknownField() {
         $validator = Validator::make(array('ha' => 'string'), array(), true);
         
+        $this->assertTrue($validator->fails());
+        $this->assertSame(array('ha' => 'Is an unknown field'), $validator->errors());
+    }
+    
+    function testUnknownFieldThrow() {
+        $validator = Validator::make(array('ha' => 'string'), array(), true);
+        
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('"ha" is an unknown field');
         
