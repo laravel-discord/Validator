@@ -83,10 +83,10 @@ class Validator {
         $arrname = \explode('\\', $class);
         $name = \array_pop($arrname);
         
-        $rname = \str_replace('rule', '', \mb_strtolower($name));
+        $rname = \str_replace('rule', '', \strtolower($name));
         static::$rulesets[$rname] = $rule;
         
-        if(\mb_stripos($name, 'rule') !== false) {
+        if(\stripos($name, 'rule') !== false) {
             static::$typeRules[] = $rname;
         }
     }
